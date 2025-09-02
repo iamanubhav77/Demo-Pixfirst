@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Photographer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Side Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <a href="this-season.html" class="nav-item" data-page="this-season">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    This season
+                </a>
+
+                <a href="analytics.html" class="nav-item" data-page="analytics">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                    </svg>
+                    Analytics
+                </a>
+                <a href="orders.html" class="nav-item" data-page="orders">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    Orders
+                </a>
+                <a href="products.html" class="nav-item" data-page="products">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg>
+                    Products
+                </a>
+                <a href="schools.html" class="nav-item" data-page="schools">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                    Schools
+                </a>
+
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Settings</div>
+                <a href="settings.html" class="nav-item active" data-page="settings">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile sidebar toggle button -->
+    <button class="sidebar-toggle" id="sidebarToggle" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>Settings</h1>
+                    <p style="margin-top: 8px; color: #64748b; font-size: 14px;">Manage your account and dashboard preferences</p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" title="Save Changes">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                            <polyline points="7,3 7,8 15,8"></polyline>
+                        </svg>
+                    </button>
+                    <button class="customize-btn">Save All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Sections -->
+        <div class="metrics-grid" style="grid-template-columns: 1fr;">
+            <!-- Profile Settings -->
+            <div class="metric-card">
+                <h3 style="margin-bottom: 20px; color: #0f172a; font-size: 18px;">Profile Settings</h3>
+                <div style="display: grid; gap: 16px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Business Name</label>
+                        <input type="text" value="PixFirst Photography" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Email Address</label>
+                        <input type="email" value="contact@pixfirst.com" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Phone Number</label>
+                        <input type="tel" value="+91 98765 43210" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Address</label>
+                        <textarea rows="3" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; resize: vertical;">123 Photography Street, Mumbai, Maharashtra 400001</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Preferences -->
+            <div class="metric-card">
+                <h3 style="margin-bottom: 20px; color: #0f172a; font-size: 18px;">Dashboard Preferences</h3>
+                <div style="display: grid; gap: 16px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Default Currency</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                                                            <option value="EUR" selected>Euro (€)</option>
+                            <option value="USD">US Dollar ($)</option>
+                            <option value="EUR">Euro (€)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Date Format</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                            <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Time Zone</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                            <option value="Asia/Kolkata" selected>Asia/Kolkata (IST)</option>
+                            <option value="UTC">UTC</option>
+                            <option value="America/New_York">America/New_York (EST)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Items per Page</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                            <option value="10">10 items</option>
+                            <option value="25" selected>25 items</option>
+                            <option value="50">50 items</option>
+                            <option value="100">100 items</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="metric-card">
+                <h3 style="margin-bottom: 20px; color: #0f172a; font-size: 18px;">Notification Settings</h3>
+                <div style="display: grid; gap: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">New Order Notifications</div>
+                            <div style="font-size: 14px; color: #6b7280;">Get notified when new orders are placed</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3b82f6; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(26px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Payment Notifications</div>
+                            <div style="font-size: 14px; color: #6b7280;">Get notified when payments are received</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3b82f6; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(26px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Weekly Reports</div>
+                            <div style="font-size: 14px; color: #6b7280;">Receive weekly performance reports</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d1d5db; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(0px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Marketing Emails</div>
+                            <div style="font-size: 14px; color: #6b7280;">Receive updates about new features</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d1d5db; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(0px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="metric-card">
+                <h3 style="margin-bottom: 20px; color: #0f172a; font-size: 18px;">Security Settings</h3>
+                <div style="display: grid; gap: 16px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Current Password</label>
+                        <input type="password" placeholder="Enter current password" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">New Password</label>
+                        <input type="password" placeholder="Enter new password" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">Confirm New Password</label>
+                        <input type="password" placeholder="Confirm new password" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Two-Factor Authentication</div>
+                            <div style="font-size: 14px; color: #6b7280;">Add an extra layer of security</div>
+                        </div>
+                        <button class="customize-btn" style="padding: 8px 16px; font-size: 14px;">Enable</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data & Privacy -->
+            <div class="metric-card">
+                <h3 style="margin-bottom: 20px; color: #0f172a; font-size: 18px;">Data & Privacy</h3>
+                <div style="display: grid; gap: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Data Analytics</div>
+                            <div style="font-size: 14px; color: #6b7280;">Allow us to collect usage data to improve the service</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3b82f6; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(26px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <div>
+                            <div style="font-weight: 500; color: #374151;">Marketing Communications</div>
+                            <div style="font-size: 14px; color: #6b7280;">Allow us to send you marketing materials</div>
+                        </div>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d1d5db; transition: .4s; border-radius: 24px;">
+                                <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(0px);"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <button class="customize-btn" style="padding: 8px 16px; font-size: 14px; margin-right: 8px;">Download My Data</button>
+                        <button class="customize-btn" style="padding: 8px 16px; font-size: 14px; background-color: #fee2e2; color: #dc2626; border-color: #fecaca;">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Settings-specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSidebarNavigation();
+            setupSettingsEventListeners();
+        });
+
+        function setupSettingsEventListeners() {
+            // Save buttons
+            const saveBtn = document.querySelector('.action-btn[title="Save Changes"]');
+            const saveAllBtn = document.querySelector('.customize-btn');
+
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    console.log('Saving changes...');
+                    saveBtn.style.opacity = '0.7';
+                    setTimeout(() => {
+                        alert('Changes saved successfully!');
+                        saveBtn.style.opacity = '1';
+                    }, 1000);
+                });
+            }
+
+            if (saveAllBtn) {
+                saveAllBtn.addEventListener('click', () => {
+                    console.log('Saving all settings...');
+                    saveAllBtn.style.opacity = '0.7';
+                    setTimeout(() => {
+                        alert('All settings saved successfully!');
+                        saveAllBtn.style.opacity = '1';
+                    }, 1000);
+                });
+            }
+
+            // Toggle switches
+            const toggles = document.querySelectorAll('input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const span = this.nextElementSibling;
+                    const innerSpan = span.querySelector('span');
+                    
+                    if (this.checked) {
+                        span.style.backgroundColor = '#3b82f6';
+                        innerSpan.style.transform = 'translateX(26px)';
+                    } else {
+                        span.style.backgroundColor = '#d1d5db';
+                        innerSpan.style.transform = 'translateX(0px)';
+                    }
+                });
+            });
+
+            // Form inputs
+            const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#3b82f6';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '#d1d5db';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

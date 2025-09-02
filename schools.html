@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools - Photographer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js"></script>
+    <style>
+        /* Enhanced Schools Page Styling */
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Global Type Scale & Design Tokens */
+        :root {
+            /* Type Scale */
+            --text-xs: 0.75rem;    /* 12px */
+            --text-sm: 0.875rem;   /* 14px */
+            --text-base: 1rem;     /* 16px */
+            --text-lg: 1.125rem;   /* 18px */
+            --text-xl: 1.25rem;    /* 20px */
+            --text-2xl: 1.5rem;    /* 24px */
+            --text-3xl: 1.875rem;  /* 30px */
+            --text-4xl: 2.25rem;   /* 36px */
+
+            /* Line Heights */
+            --leading-tight: 1.25;
+            --leading-snug: 1.375;
+            --leading-normal: 1.5;
+            --leading-relaxed: 1.625;
+
+            /* Letter Spacing */
+            --tracking-tight: -0.025em;
+            --tracking-normal: 0;
+            --tracking-wide: 0.025em;
+            --tracking-wider: 0.05em;
+
+            /* Spacing Scale */
+            --space-1: 0.25rem;   /* 4px */
+            --space-2: 0.5rem;    /* 8px */
+            --space-3: 0.75rem;   /* 12px */
+            --space-4: 1rem;      /* 16px */
+            --space-5: 1.25rem;   /* 20px */
+            --space-6: 1.5rem;    /* 24px */
+            --space-8: 2rem;      /* 32px */
+            --space-10: 2.5rem;   /* 40px */
+            --space-12: 3rem;     /* 48px */
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;  /* 6px */
+            --radius-md: 0.5rem;    /* 8px */
+            --radius-lg: 0.75rem;   /* 12px */
+            --radius-xl: 1rem;      /* 16px */
+            --radius-2xl: 1.5rem;   /* 24px */
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+            /* Colors */
+            --color-primary: #667eea;
+            --color-primary-dark: #5a67d8;
+            --color-secondary: #764ba2;
+            --color-success: #10b981;
+            --color-success-light: #34d399;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-gray-50: #f9fafb;
+            --color-gray-100: #f3f4f6;
+            --color-gray-200: #e5e7eb;
+            --color-gray-300: #d1d5db;
+            --color-gray-400: #9ca3af;
+            --color-gray-500: #6b7280;
+            --color-gray-600: #4b5563;
+            --color-gray-700: #374151;
+            --color-gray-800: #1f2937;
+            --color-gray-900: #111827;
+        }
+        
+        .schools-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: var(--space-8);
+            border-radius: var(--radius-2xl);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .schools-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+            filter: blur(2px);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+        }
+
+        .header-action-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-action-btn.primary {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .header-action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .schools-header h1 {
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            margin: 0;
+            line-height: var(--leading-tight);
+            letter-spacing: var(--tracking-tight);
+        }
+        
+        .schools-header p {
+            font-size: var(--text-base);
+            opacity: 0.9;
+            margin: var(--space-2) 0 0 0;
+            line-height: var(--leading-normal);
+            font-weight: 400;
+        }
+        
+        .stats-section {
+            margin-bottom: var(--space-8);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+        
+        .stat-card {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-gray-100);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-icon {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-3);
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-value {
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-2);
+            line-height: var(--leading-tight);
+            letter-spacing: var(--tracking-tight);
+        }
+        
+        .stat-label {
+            color: var(--color-gray-600);
+            font-size: var(--text-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wider);
+            line-height: var(--leading-normal);
+        }
+        
+        .search-filter-bar {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-8);
+            display: flex;
+            gap: var(--space-4);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box svg {
+            position: absolute;
+            left: var(--space-4);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-gray-500);
+            width: 16px;
+            height: 16px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--text-base);
+            transition: all 0.3s ease;
+            height: 48px;
+            box-sizing: border-box;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-box input::placeholder {
+            color: var(--color-gray-400);
+            font-size: var(--text-base);
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: var(--space-4);
+        }
+        
+        .filter-select {
+            padding: var(--space-3) var(--space-4);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            background: white;
+            font-size: var(--text-base);
+            transition: all 0.3s ease;
+            height: 48px;
+            box-sizing: border-box;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .table-section {
+            background: white;
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
+            padding: var(--space-4);
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-gray-700);
+            border-bottom: 2px solid var(--color-gray-200);
+            font-size: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+        }
+        
+        .data-table td {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--color-gray-100);
+            transition: background-color 0.3s ease;
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+        }
+        
+        .data-table tr:hover td {
+            background-color: var(--color-gray-50);
+        }
+        
+        .school-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .school-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--text-base);
+        }
+        
+        .school-name {
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-1);
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+        }
+        
+        .school-location {
+            color: var(--color-gray-600);
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+        }
+        
+        /* Health Score Styles */
+        .health-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .health-badge {
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-lg);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+            min-height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .health-badge.excellent {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .health-badge.good {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .health-badge.poor {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .health-tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .health-tooltip::after {
+            content: "Why?";
+            font-size: 0.7rem;
+            color: #64748b;
+            text-decoration: underline;
+        }
+        
+        .health-tooltip:hover::before {
+            content: "CR (40%): 85% | AOV (30%): €45 | Repeat Rate (20%): 65% | SLA Issues (10%): 2";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* Benchmark Chips */
+        .benchmark-chips {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.25rem;
+        }
+        
+        .benchmark-chip {
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-md);
+            font-size: var(--text-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+            min-height: 20px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .benchmark-chip.positive {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .benchmark-chip.negative {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .benchmark-chip.neutral {
+            background: var(--color-gray-100);
+            color: var(--color-gray-600);
+        }
+        
+        /* Enhanced Comparison Studio */
+        .comparison-studio {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-6);
+            text-align: left;
+            align-self: flex-start;
+        }
+
+        .comparison-header {
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 2px solid var(--color-gray-100);
+        }
+
+        .comparison-title {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin: 0 0 var(--space-1) 0;
+            line-height: var(--leading-tight);
+            letter-spacing: var(--tracking-tight);
+        }
+
+        .comparison-description {
+            font-size: var(--text-xs);
+            color: var(--color-gray-600);
+            margin: 0;
+            line-height: var(--leading-normal);
+            font-weight: 400;
+            max-width: 600px;
+        }
+        
+                .comparison-inputs {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            align-items: center;
+        }
+
+        .comparison-input {
+            flex: 1;
+            padding: var(--space-2) var(--space-3);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--text-sm);
+            height: 40px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .comparison-input::placeholder {
+            color: var(--color-gray-400);
+            font-size: var(--text-sm);
+        }
+
+        .compare-btn {
+            padding: var(--space-2) var(--space-4);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            height: 40px;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            font-size: var(--text-sm);
+        }
+
+        .compare-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+                .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-4);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-2) var(--space-2);
+            border-bottom: 1px solid var(--color-gray-100);
+            vertical-align: middle;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
+            font-weight: 600;
+            color: var(--color-gray-700);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wider);
+        }
+
+        .comparison-table tr:hover td {
+            background-color: var(--color-gray-50);
+        }
+
+        /* Table Header Classes */
+        .metric-header {
+            text-align: left !important;
+            width: 25%;
+        }
+
+        .school-header {
+            text-align: right !important;
+            width: 25%;
+        }
+
+        .delta-header {
+            text-align: right !important;
+            width: 15%;
+        }
+
+        /* Table Cell Classes */
+        .metric-name {
+            text-align: left !important;
+            font-weight: 500;
+            color: var(--color-gray-700);
+            font-size: var(--text-xs);
+            line-height: var(--leading-normal);
+        }
+
+        .school-value {
+            text-align: right !important;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            position: relative;
+            font-size: var(--text-xs);
+            line-height: var(--leading-normal);
+        }
+
+        .delta-value {
+            text-align: right !important;
+            font-weight: 600;
+            font-size: var(--text-xs);
+            line-height: var(--leading-normal);
+        }
+
+        .product-name {
+            text-align: center !important;
+            font-size: var(--text-xs);
+            line-height: var(--leading-normal);
+            word-wrap: break-word;
+            max-width: 100px;
+        }
+
+        .section-divider {
+            background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
+            font-weight: 600;
+            color: var(--color-gray-700);
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wider);
+            border-left: 3px solid var(--color-primary);
+        }
+        
+                .delta-pill {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 16px;
+            font-size: var(--text-xs);
+            font-weight: 600;
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid;
+        }
+
+        .delta-pill.positive {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #15803d;
+            border-color: rgba(21, 128, 61, 0.3);
+        }
+
+        .delta-pill.negative {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #dc2626;
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+        
+        .winner-crown {
+            color: var(--color-warning);
+            font-size: var(--text-xs);
+            margin-left: var(--space-1);
+            vertical-align: middle;
+            display: inline-block;
+            animation: crownGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes crownGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .metric-winners {
+            display: flex;
+            gap: var(--space-1);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: var(--space-3);
+        }
+        
+        .winner-pill {
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-md);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+            min-height: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .winner-pill.school1 {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        
+        .winner-pill.school2 {
+            background: #fce7f3;
+            color: #be185d;
+        }
+        
+        /* AOV Distribution */
+        .aov-distribution {
+            margin: 1rem 0;
+        }
+        
+        .histogram {
+            display: flex;
+            align-items: end;
+            gap: 0.25rem;
+            height: 60px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .histogram-bar {
+            flex: 1;
+            background: #e2e8f0;
+            border-radius: 2px 2px 0 0;
+            min-width: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .histogram-bar:hover {
+            background: #94a3b8;
+            transform: scaleY(1.05);
+        }
+        
+        .histogram-bar.active {
+            background: #667eea;
+        }
+        
+        .histogram-bar.active:hover {
+            background: #5a67d8;
+        }
+        
+        /* AOV Distribution Tooltip */
+        .histogram-bar::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .histogram-bar::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+        
+        .histogram-bar:hover::before,
+        .histogram-bar:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 5px);
+        }
+        
+        .histogram-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+        
+        /* Funnel */
+        .funnel {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .funnel-step {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .funnel-bar {
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 0.25rem;
+            position: relative;
+        }
+        
+        .funnel-bar.filled {
+            background: #667eea;
+        }
+        
+        .funnel-bar.largest-drop {
+            background: #fecaca;
+        }
+        
+        .funnel-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .funnel-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .drop-off {
+            font-size: 0.65rem;
+            color: #ef4444;
+            font-weight: 500;
+        }
+        
+        .drop-off.largest {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        /* Details/Summary */
+        details {
+            margin-top: 0.5rem;
+        }
+        
+        summary {
+            cursor: pointer;
+            color: #667eea;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+        
+        summary:hover {
+            color: #5b21b6;
+        }
+        
+        .details-content {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+        
+        /* Legend */
+        .table-legend {
+            font-size: var(--text-xs);
+            color: var(--color-gray-600);
+            margin-bottom: var(--space-4);
+            text-align: center;
+            font-weight: 500;
+            line-height: var(--leading-normal);
+        }
+        
+        .badge {
+            padding: var(--space-2) var(--space-3);
+            border-radius: 20px;
+            font-size: var(--text-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+            min-height: 24px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .badge.elementary {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        
+        .badge.middle {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .badge.high {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .status-badge {
+            padding: var(--space-2) var(--space-3);
+            border-radius: 20px;
+            font-size: var(--text-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+            min-height: 24px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .status-badge.active {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn.small {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn.small:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #1e293b;
+            font-size: 1.5rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #f1f5f9;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn.secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .btn.secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        /* Animation for page load */
+        .container > * {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .schools-header h1 {
+                font-size: var(--text-2xl);
+            }
+            
+            .schools-header p {
+                font-size: var(--text-sm);
+            }
+
+            .comparison-title {
+                font-size: var(--text-xl);
+            }
+
+            .comparison-description {
+                font-size: var(--text-xs);
+            }
+
+            .search-filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-3);
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-3);
+            }
+
+            .stat-card {
+                padding: var(--space-4);
+            }
+
+            .stat-value {
+                font-size: var(--text-lg);
+            }
+
+            .stat-label {
+                font-size: var(--text-xs);
+            }
+            
+            .data-table {
+                font-size: var(--text-xs);
+            }
+            
+            .school-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-2);
+            }
+
+            /* Comparison Studio Responsive */
+            .comparison-inputs {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+
+            .comparison-input {
+                width: 100%;
+            }
+
+            .compare-btn {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .comparison-table {
+                font-size: var(--text-xs);
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-3) var(--space-2);
+            }
+
+            .metric-header,
+            .school-header,
+            .delta-header {
+                width: auto;
+            }
+
+            .product-name {
+                max-width: 80px;
+                font-size: var(--text-xs);
+            }
+
+            .delta-pill {
+                padding: var(--space-1) var(--space-2);
+                font-size: var(--text-xs);
+                min-width: 50px;
+            }
+
+            .section-divider {
+                font-size: var(--text-xs);
+                padding: var(--space-2) var(--space-3);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .schools-header h1 {
+                font-size: var(--text-xl);
+            }
+            
+            .comparison-title {
+                font-size: var(--text-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Side Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <a href="this-season.html" class="nav-item" data-page="this-season">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    This season
+                </a>
+                <a href="analytics.html" class="nav-item" data-page="analytics">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                    </svg>
+                    Analytics
+                </a>
+                <a href="orders.html" class="nav-item" data-page="orders">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    Orders
+                </a>
+                <a href="products.html" class="nav-item" data-page="products">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg>
+                    Products
+                </a>
+                <a href="schools.html" class="nav-item active" data-page="schools">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                    Schools
+                </a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Settings</div>
+                <a href="settings.html" class="nav-item" data-page="settings">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile sidebar toggle button -->
+    <button class="sidebar-toggle" id="sidebarToggle" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="container">
+        <!-- Beautiful Header Section -->
+        <div class="schools-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🏫 Schools Management</h1>
+                    <p>Manage your school partnerships and track performance metrics</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="header-action-btn primary" id="addSchoolBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add School
+                        </button>
+                        <button class="header-action-btn" title="Export">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                        <button class="header-action-btn" title="Filter">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- School Stats Cards -->
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏫</div>
+                    <div class="stat-content">
+                        <div class="stat-value">50</div>
+                        <div class="stat-label">Total Schools</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Active Schools</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <div class="stat-value">€26,500</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-value">1,800</div>
+                        <div class="stat-label">Total Students</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-content">
+                        <div class="stat-value">1,250</div>
+                        <div class="stat-label">Kids who ordered</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏥</div>
+                    <div class="stat-content">
+                        <div class="stat-value">78</div>
+                        <div class="stat-label">Avg Health Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Studio -->
+        <div class="comparison-studio">
+            <div class="comparison-header">
+                <h3 class="comparison-title">Comparison Studio</h3>
+                <p class="comparison-description">Compare key metrics between two schools at a glance</p>
+            </div>
+            <div class="comparison-inputs">
+                <input type="text" class="comparison-input" placeholder="Enter School Code" value="LF001">
+                <input type="text" class="comparison-input" placeholder="Enter School Code" value="EM002">
+                <button class="compare-btn">Compare</button>
+            </div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th class="metric-header">Metric</th>
+                        <th class="school-header">School 1 (LF001)</th>
+                        <th class="school-header">School 2 (EM002)</th>
+                        <th class="delta-header">Delta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- School Key Metrics -->
+                    <tr class="metric-group-header">
+                        <td colspan="4" class="section-divider">School Key Metrics</td>
+                    </tr>
+                    <tr data-metric="total-kids" data-school-id="LF001">
+                        <td class="metric-name">Total kids</td>
+                        <td class="school-value">1,250 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">980</td>
+                        <td class="delta-value"><span class="delta-pill positive">+27.6%</span></td>
+                    </tr>
+                    <tr data-metric="sale-per-kid" data-school-id="LF001">
+                        <td class="metric-name">Sale per kid (€)</td>
+                        <td class="school-value">€32.40 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">€28.75</td>
+                        <td class="delta-value"><span class="delta-pill positive">+12.7%</span></td>
+                    </tr>
+                    <tr data-metric="conversion-rate" data-school-id="LF001">
+                        <td class="metric-name">Conversion rate (%)</td>
+                        <td class="school-value">78.5% <span class="winner-crown">👑</span></td>
+                        <td class="school-value">65.2%</td>
+                        <td class="delta-value"><span class="delta-pill positive">+20.4%</span></td>
+                    </tr>
+                    <tr data-metric="avg-basket" data-school-id="LF001">
+                        <td class="metric-name">Avg Basket (€)</td>
+                        <td class="school-value">€45.20 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">€42.80</td>
+                        <td class="delta-value"><span class="delta-pill positive">+5.6%</span></td>
+                    </tr>
+                    <tr data-metric="sales" data-school-id="LF001">
+                        <td class="metric-name">Sales (€)</td>
+                        <td class="school-value">€40,500 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">€28,175</td>
+                        <td class="delta-value"><span class="delta-pill positive">+43.7%</span></td>
+                    </tr>
+                    
+                    <!-- Product Performance -->
+                    <tr class="metric-group-header">
+                        <td colspan="4" class="section-divider">Product Performance</td>
+                    </tr>
+                    <tr data-metric="group-poses" data-school-id="LF001">
+                        <td class="metric-name">Group poses</td>
+                        <td class="school-value">450</td>
+                        <td class="school-value">520 <span class="winner-crown">👑</span></td>
+                        <td class="delta-value"><span class="delta-pill negative">-13.5%</span></td>
+                    </tr>
+                    <tr data-metric="indv-poses" data-school-id="LF001">
+                        <td class="metric-name">Indv. poses</td>
+                        <td class="school-value">1,850 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">1,420</td>
+                        <td class="delta-value"><span class="delta-pill positive">+30.3%</span></td>
+                    </tr>
+                    <tr data-metric="no-fratrie" data-school-id="LF001">
+                        <td class="metric-name">No. of Fratrie</td>
+                        <td class="school-value">180</td>
+                        <td class="school-value">220 <span class="winner-crown">👑</span></td>
+                        <td class="delta-value"><span class="delta-pill negative">-18.2%</span></td>
+                    </tr>
+                    <tr data-metric="no-packs" data-school-id="LF001">
+                        <td class="metric-name">No. of Packs</td>
+                        <td class="school-value">85 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">72</td>
+                        <td class="delta-value"><span class="delta-pill positive">+18.1%</span></td>
+                    </tr>
+                    <tr data-metric="pack-price" data-school-id="LF001">
+                        <td class="metric-name">Pack Price</td>
+                        <td class="school-value">€65.00 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">€58.50</td>
+                        <td class="delta-value"><span class="delta-pill positive">+11.1%</span></td>
+                    </tr>
+                    <tr data-metric="revenues-vs-total" data-school-id="LF001">
+                        <td class="metric-name">% of revenues vs. total sales</td>
+                        <td class="school-value">68.5% <span class="winner-crown">👑</span></td>
+                        <td class="school-value">62.3%</td>
+                        <td class="delta-value"><span class="delta-pill positive">+9.9%</span></td>
+                    </tr>
+                    <tr data-metric="ab-packs" data-school-id="LF001">
+                        <td class="metric-name">AB of Packs</td>
+                        <td class="school-value">€72.40 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">€65.80</td>
+                        <td class="delta-value"><span class="delta-pill positive">+10.0%</span></td>
+                    </tr>
+                    <tr data-metric="ab-non-packs" data-school-id="LF001">
+                        <td class="metric-name">AB of non-packs</td>
+                        <td class="school-value">€28.50</td>
+                        <td class="school-value">€32.20 <span class="winner-crown">👑</span></td>
+                        <td class="delta-value"><span class="delta-pill negative">-11.5%</span></td>
+                    </tr>
+                    
+                    <!-- Product Sales Performance -->
+                    <tr class="metric-group-header">
+                        <td colspan="4" class="section-divider">Product Sales Performance</td>
+                    </tr>
+                    <tr data-metric="pack-hit-rate" data-school-id="LF001">
+                        <td class="metric-name">Pack Hit Rate (%)</td>
+                        <td class="school-value">82.3% <span class="winner-crown">👑</span></td>
+                        <td class="school-value">75.8%</td>
+                        <td class="delta-value"><span class="delta-pill positive">+8.6%</span></td>
+                    </tr>
+                    <tr data-metric="total-packs-sold" data-school-id="LF001">
+                        <td class="metric-name">Total Packs Sold</td>
+                        <td class="school-value">70 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">55</td>
+                        <td class="delta-value"><span class="delta-pill positive">+27.3%</span></td>
+                    </tr>
+                    <tr data-metric="total-orders-count" data-school-id="LF001">
+                        <td class="metric-name">Total Orders Count</td>
+                        <td class="school-value">895 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">720</td>
+                        <td class="delta-value"><span class="delta-pill positive">+24.3%</span></td>
+                    </tr>
+                    <tr data-metric="total-products" data-school-id="LF001">
+                        <td class="metric-name">Total Products</td>
+                        <td class="school-value">2,300 <span class="winner-crown">👑</span></td>
+                        <td class="school-value">1,940</td>
+                        <td class="delta-value"><span class="delta-pill positive">+18.6%</span></td>
+                    </tr>
+                    <tr data-metric="highest-sold-product" data-school-id="LF001">
+                        <td class="metric-name">Highest Sold Product</td>
+                        <td class="school-value product-name">Classic Portrait<br>Package</td>
+                        <td class="school-value product-name">Premium Family<br>Collection</td>
+                        <td class="delta-value">—</td>
+                    </tr>
+                    <tr data-metric="highest-sold-pack" data-school-id="LF001">
+                        <td class="metric-name">Highest Sold Pack</td>
+                        <td class="school-value product-name">Deluxe Memory<br>Bundle</td>
+                        <td class="school-value product-name">Essential Family<br>Pack</td>
+                        <td class="delta-value">—</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="metric-winners">
+                <span class="winner-pill school1">Total kids: School 1</span>
+                <span class="winner-pill school1">Sale per kid: School 1</span>
+                <span class="winner-pill school1">Conversion rate: School 1</span>
+                <span class="winner-pill school1">Avg Basket: School 1</span>
+                <span class="winner-pill school1">Sales: School 1</span>
+                <span class="winner-pill school2">Group poses: School 2</span>
+                <span class="winner-pill school1">Indv. poses: School 1</span>
+                <span class="winner-pill school2">No. of Fratrie: School 2</span>
+                <span class="winner-pill school1">No. of Packs: School 1</span>
+                <span class="winner-pill school1">Pack Price: School 1</span>
+                <span class="winner-pill school1">% revenues: School 1</span>
+                <span class="winner-pill school1">AB of Packs: School 1</span>
+                <span class="winner-pill school2">AB of non-packs: School 2</span>
+                <span class="winner-pill school1">Pack Hit Rate: School 1</span>
+                <span class="winner-pill school1">Total Packs Sold: School 1</span>
+                <span class="winner-pill school1">Total Orders: School 1</span>
+                <span class="winner-pill school1">Total Products: School 1</span>
+            </div>
+            <div style="margin-top: 0.5rem; font-size: 0.7rem; color: #64748b; text-align: center; font-style: italic;">
+                Comparisons vs selected schools; placeholders only
+            </div>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-bar">
+            <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Search schools..." id="schoolSearch">
+            </div>
+            <div class="filter-options">
+                <select class="filter-select" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <select class="filter-select" id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="elementary">Elementary</option>
+                    <option value="middle">Middle School</option>
+                    <option value="high">High School</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Schools Table -->
+        <div class="table-section">
+            <div class="table-legend">vs org median/percentiles</div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>School Name</th>
+                            <th>Type</th>
+                            <th>Students</th>
+                            <th>Orders</th>
+                            <th>Revenue</th>
+                            <th>Health</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schoolsTableBody">
+                        <tr>
+                            <td>
+                                <div class="school-info">
+                                    <div class="school-avatar">LF</div>
+                                    <div class="school-details">
+                                        <div class="school-name">Lycée Français de Paris</div>
+                                        <div class="school-location">Paris, France</div>
+                                        <div class="benchmark-chips">
+                                            <span class="benchmark-chip positive">↑ Top 10% AOV</span>
+                                            <span class="benchmark-chip negative">↓ Bottom 20% CR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <details>
+                                    <summary>Details</summary>
+                                    <div class="details-content">
+                                        <div class="aov-distribution">
+                                            <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9rem;">AOV Distribution</h4>
+                                            <p style="margin: 0 0 0.75rem 0; font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                                                📊 Shows the distribution of Average Order Values (AOV) across different price ranges. 
+                                                Higher bars indicate more orders in that price bracket. This helps identify pricing patterns 
+                                                and customer spending behavior for this school.
+                                            </p>
+                                            <div class="histogram">
+                                                <div class="histogram-bar" style="height: 20%; --v: 20" data-tooltip="€0-20: 84 orders (20% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 45%; --v: 45" data-tooltip="€20-40: 189 orders (45% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 80%; --v: 80" data-tooltip="€40-60: 336 orders (80% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 60%; --v: 60" data-tooltip="€60-80: 252 orders (60% of total)"></div>
+                                                <div class="histogram-bar" style="height: 30%; --v: 30" data-tooltip="€80+: 126 orders (30% of total)"></div>
+                                            </div>
+                                            <div class="histogram-labels">
+                                                <span>€0-20</span>
+                                                <span>€20-40</span>
+                                                <span>€40-60</span>
+                                                <span>€60-80</span>
+                                                <span>€80+</span>
+                                            </div>
+                                        </div>
+                                        <div class="funnel">
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Views</div>
+                                                <div class="funnel-value">1,200</div>
+                                            </div>
+                                            <div class="drop-off">-15%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Connected</div>
+                                                <div class="funnel-value">1,020</div>
+                                            </div>
+                                            <div class="drop-off largest">-45%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled largest-drop"></div>
+                                                <div class="funnel-label">Cart</div>
+                                                <div class="funnel-value">561</div>
+                                            </div>
+                                            <div class="drop-off">-25%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Orders</div>
+                                                <div class="funnel-value">421</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </details>
+                            </td>
+                            <td><span class="badge high">High School</span></td>
+                            <td>245</td>
+                            <td>189</td>
+                            <td>€5,400</td>
+                            <td>
+                                <div class="health-score">
+                                    <div class="health-badge excellent">92</div>
+                                    <div class="health-tooltip"></div>
+                                </div>
+                            </td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="school-info">
+                                    <div class="school-avatar">EM</div>
+                                    <div class="school-details">
+                                        <div class="school-name">École Montessori de Lyon</div>
+                                        <div class="school-location">Lyon, France</div>
+                                        <div class="benchmark-chips">
+                                            <span class="benchmark-chip neutral">→ Avg AOV</span>
+                                            <span class="benchmark-chip positive">↑ Top 15% CR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <details>
+                                    <summary>Details</summary>
+                                    <div class="details-content">
+                                        <div class="aov-distribution">
+                                            <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9rem;">AOV Distribution</h4>
+                                            <p style="margin: 0 0 0.75rem 0; font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                                                📊 Shows the distribution of Average Order Values (AOV) across different price ranges. 
+                                                Higher bars indicate more orders in that price bracket. This helps identify pricing patterns 
+                                                and customer spending behavior for this school.
+                                            </p>
+                                            <div class="histogram">
+                                                <div class="histogram-bar active" style="height: 35%; --v: 35" data-tooltip="€0-20: 147 orders (35% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 55%; --v: 55" data-tooltip="€20-40: 231 orders (55% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 70%; --v: 70" data-tooltip="€40-60: 294 orders (70% of total)"></div>
+                                                <div class="histogram-bar" style="height: 25%; --v: 25" data-tooltip="€60-80: 105 orders (25% of total)"></div>
+                                                <div class="histogram-bar" style="height: 15%; --v: 15" data-tooltip="€80+: 63 orders (15% of total)"></div>
+                                            </div>
+                                            <div class="histogram-labels">
+                                                <span>€0-20</span>
+                                                <span>€20-40</span>
+                                                <span>€40-60</span>
+                                                <span>€60-80</span>
+                                                <span>€80+</span>
+                                            </div>
+                                        </div>
+                                        <div class="funnel">
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Views</div>
+                                                <div class="funnel-value">980</div>
+                                            </div>
+                                            <div class="drop-off">-20%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Connected</div>
+                                                <div class="funnel-value">784</div>
+                                            </div>
+                                            <div class="drop-off largest">-50%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled largest-drop"></div>
+                                                <div class="funnel-label">Cart</div>
+                                                <div class="funnel-value">392</div>
+                                            </div>
+                                            <div class="drop-off">-30%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Orders</div>
+                                                <div class="funnel-value">275</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </details>
+                            </td>
+                            <td><span class="badge elementary">Elementary</span></td>
+                            <td>320</td>
+                            <td>156</td>
+                            <td>€4,200</td>
+                            <td>
+                                <div class="health-score">
+                                    <div class="health-badge good">75</div>
+                                    <div class="health-tooltip"></div>
+                                </div>
+                            </td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="school-info">
+                                    <div class="school-avatar">CM</div>
+                                    <div class="school-details">
+                                        <div class="school-name">Collège Marcel Pagnol</div>
+                                        <div class="school-location">Marseille, France</div>
+                                        <div class="benchmark-chips">
+                                            <span class="benchmark-chip positive">↑ Top 5% AOV</span>
+                                            <span class="benchmark-chip positive">↑ Top 25% CR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <details>
+                                    <summary>Details</summary>
+                                    <div class="details-content">
+                                        <div class="aov-distribution">
+                                            <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9rem;">AOV Distribution</h4>
+                                            <p style="margin: 0 0 0.75rem 0; font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                                                📊 Shows the distribution of Average Order Values (AOV) across different price ranges. 
+                                                Higher bars indicate more orders in that price bracket. This helps identify pricing patterns 
+                                                and customer spending behavior for this school.
+                                            </p>
+                                            <div class="histogram">
+                                                <div class="histogram-bar" style="height: 10%; --v: 10" data-tooltip="€0-20: 42 orders (10% of total)"></div>
+                                                <div class="histogram-bar" style="height: 25%; --v: 25" data-tooltip="€20-40: 105 orders (25% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 90%; --v: 90" data-tooltip="€40-60: 378 orders (90% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 75%; --v: 75" data-tooltip="€60-80: 315 orders (75% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 50%; --v: 50" data-tooltip="€80+: 210 orders (50% of total)"></div>
+                                            </div>
+                                            <div class="histogram-labels">
+                                                <span>€0-20</span>
+                                                <span>€20-40</span>
+                                                <span>€40-60</span>
+                                                <span>€60-80</span>
+                                                <span>€80+</span>
+                                            </div>
+                                        </div>
+                                        <div class="funnel">
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Views</div>
+                                                <div class="funnel-value">650</div>
+                                            </div>
+                                            <div class="drop-off">-12%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Connected</div>
+                                                <div class="funnel-value">572</div>
+                                            </div>
+                                            <div class="drop-off largest">-40%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled largest-drop"></div>
+                                                <div class="funnel-label">Cart</div>
+                                                <div class="funnel-value">343</div>
+                                            </div>
+                                            <div class="drop-off">-20%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Orders</div>
+                                                <div class="funnel-value">275</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </details>
+                            </td>
+                            <td><span class="badge middle">Middle School</span></td>
+                            <td>180</td>
+                            <td>145</td>
+                            <td>€5,400</td>
+                            <td>
+                                <div class="health-score">
+                                    <div class="health-badge excellent">88</div>
+                                    <div class="health-tooltip"></div>
+                                </div>
+                            </td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="school-info">
+                                    <div class="school-avatar">EN</div>
+                                    <div class="school-details">
+                                        <div class="school-name">École Normale de Nice</div>
+                                        <div class="school-location">Nice, France</div>
+                                        <div class="benchmark-chips">
+                                            <span class="benchmark-chip negative">↓ Bottom 30% AOV</span>
+                                            <span class="benchmark-chip negative">↓ Bottom 40% CR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <details>
+                                    <summary>Details</summary>
+                                    <div class="details-content">
+                                        <div class="aov-distribution">
+                                            <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9rem;">AOV Distribution</h4>
+                                            <p style="margin: 0 0 0.75rem 0; font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                                                📊 Shows the distribution of Average Order Values (AOV) across different price ranges. 
+                                                Higher bars indicate more orders in that price bracket. This helps identify pricing patterns 
+                                                and customer spending behavior for this school.
+                                            </p>
+                                            <div class="histogram">
+                                                <div class="histogram-bar active" style="height: 60%; --v: 60" data-tooltip="€0-20: 252 orders (60% of total)"></div>
+                                                <div class="histogram-bar active" style="height: 40%; --v: 40" data-tooltip="€20-40: 168 orders (40% of total)"></div>
+                                                <div class="histogram-bar" style="height: 20%; --v: 20" data-tooltip="€40-60: 84 orders (20% of total)"></div>
+                                                <div class="histogram-bar" style="height: 10%; --v: 10" data-tooltip="€60-80: 42 orders (10% of total)"></div>
+                                                <div class="histogram-bar" style="height: 5%; --v: 5" data-tooltip="€80+: 21 orders (5% of total)"></div>
+                                            </div>
+                                            <div class="histogram-labels">
+                                                <span>€0-20</span>
+                                                <span>€20-40</span>
+                                                <span>€40-60</span>
+                                                <span>€60-80</span>
+                                                <span>€80+</span>
+                                            </div>
+                                        </div>
+                                        <div class="funnel">
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Views</div>
+                                                <div class="funnel-value">420</div>
+                                            </div>
+                                            <div class="drop-off">-25%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Connected</div>
+                                                <div class="funnel-value">315</div>
+                                            </div>
+                                            <div class="drop-off largest">-60%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled largest-drop"></div>
+                                                <div class="funnel-label">Cart</div>
+                                                <div class="funnel-value">126</div>
+                                            </div>
+                                            <div class="drop-off">-35%</div>
+                                            <div class="funnel-step">
+                                                <div class="funnel-bar filled"></div>
+                                                <div class="funnel-label">Orders</div>
+                                                <div class="funnel-value">82</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </details>
+                            </td>
+                            <td><span class="badge elementary">Elementary</span></td>
+                            <td>210</td>
+                            <td>45</td>
+                            <td>€1,800</td>
+                            <td>
+                                <div class="health-score">
+                                    <div class="health-badge poor">45</div>
+                                    <div class="health-tooltip"></div>
+                                </div>
+                            </td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add School Modal -->
+    <div class="modal" id="addSchoolModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New School</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addSchoolForm">
+                    <div class="form-group">
+                        <label for="schoolName">School Name</label>
+                        <input type="text" id="schoolName" name="schoolName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolType">School Type</label>
+                        <select id="schoolType" name="schoolType" required>
+                            <option value="">Select Type</option>
+                            <option value="elementary">Elementary</option>
+                            <option value="middle">Middle School</option>
+                            <option value="high">High School</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolLocation">Location</label>
+                        <input type="text" id="schoolLocation" name="schoolLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentCount">Number of Students</label>
+                        <input type="number" id="studentCount" name="studentCount" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPerson">Contact Person</label>
+                        <input type="text" id="contactPerson" name="contactPerson" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Contact Email</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Contact Phone</label>
+                        <input type="tel" id="contactPhone" name="contactPhone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary" id="cancelAdd">Cancel</button>
+                <button class="btn primary" id="saveSchool">Save School</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Schools-specific JavaScript with animations
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSidebarNavigation();
+            setupSchoolsEventListeners();
+            initializeAnimations();
+        });
+
+        function initializeAnimations() {
+            // Add staggered animation to stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Add hover effects to table rows
+            const tableRows = document.querySelectorAll('.data-table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    row.style.transform = 'scale(1.01)';
+                    row.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                });
+                
+                row.addEventListener('mouseleave', () => {
+                    row.style.transform = 'scale(1)';
+                    row.style.boxShadow = 'none';
+                });
+            });
+
+            // Add loading animation to stats
+            animateStats();
+        }
+
+        function animateStats() {
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(stat => {
+                const finalValue = stat.textContent;
+                const numericValue = finalValue.replace(/[^0-9]/g, '');
+                
+                if (numericValue) {
+                    animateNumber(stat, 0, parseInt(numericValue), finalValue);
+                }
+            });
+        }
+
+        function animateNumber(element, start, end, originalText) {
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const current = Math.floor(start + (end - start) * progress);
+                element.textContent = originalText.replace(/[0-9]+/, current.toLocaleString());
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = originalText;
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function setupSchoolsEventListeners() {
+            // Add School Modal
+            const addSchoolBtn = document.getElementById('addSchoolBtn');
+            const addSchoolModal = document.getElementById('addSchoolModal');
+            const closeModal = document.getElementById('closeModal');
+            const cancelAdd = document.getElementById('cancelAdd');
+            const saveSchool = document.getElementById('saveSchool');
+
+            if (addSchoolBtn) {
+                addSchoolBtn.addEventListener('click', () => {
+                    addSchoolModal.style.display = 'flex';
+                });
+            }
+
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    addSchoolModal.style.display = 'none';
+                });
+            }
+
+            if (cancelAdd) {
+                cancelAdd.addEventListener('click', () => {
+                    addSchoolModal.style.display = 'none';
+                });
+            }
+
+            if (saveSchool) {
+                saveSchool.addEventListener('click', () => {
+                    const form = document.getElementById('addSchoolForm');
+                    if (form.checkValidity()) {
+                        console.log('Saving new school...');
+                        // Add school logic here
+                        addSchoolModal.style.display = 'none';
+                        form.reset();
+                        alert('School added successfully!');
+                    } else {
+                        form.reportValidity();
+                    }
+                });
+            }
+
+            // Search functionality
+            const schoolSearch = document.getElementById('schoolSearch');
+            if (schoolSearch) {
+                schoolSearch.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    filterSchools(searchTerm);
+                });
+            }
+
+            // Filter functionality
+            const statusFilter = document.getElementById('statusFilter');
+            const typeFilter = document.getElementById('typeFilter');
+
+            if (statusFilter) {
+                statusFilter.addEventListener('change', filterSchools);
+            }
+
+            if (typeFilter) {
+                typeFilter.addEventListener('change', filterSchools);
+            }
+        }
+
+        function filterSchools() {
+            const searchTerm = document.getElementById('schoolSearch')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('statusFilter')?.value || '';
+            const typeFilter = document.getElementById('typeFilter')?.value || '';
+
+            const rows = document.querySelectorAll('#schoolsTableBody tr');
+
+            rows.forEach(row => {
+                const schoolName = row.querySelector('.school-name')?.textContent.toLowerCase() || '';
+                const status = row.querySelector('.status-badge')?.textContent.toLowerCase() || '';
+                const type = row.querySelector('.badge')?.textContent.toLowerCase() || '';
+
+                const matchesSearch = schoolName.includes(searchTerm);
+                const matchesStatus = !statusFilter || status.includes(statusFilter);
+                const matchesType = !typeFilter || type.includes(typeFilter);
+
+                if (matchesSearch && matchesStatus && matchesType) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

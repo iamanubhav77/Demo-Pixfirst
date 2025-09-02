@@ -1,0 +1,2820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Photographer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Side Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <a href="this-season.html" class="nav-item" data-page="this-season">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    This season
+                </a>
+                <a href="analytics.html" class="nav-item" data-page="analytics">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                    </svg>
+                    Analytics
+                </a>
+                <a href="orders.html" class="nav-item" data-page="orders">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    Orders
+                </a>
+                <a href="products.html" class="nav-item active" data-page="products">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg>
+                    Products
+                </a>
+                <a href="schools.html" class="nav-item" data-page="schools">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                    Schools
+                </a>
+
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Settings</div>
+                <a href="settings.html" class="nav-item" data-page="settings">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile sidebar toggle button -->
+    <button class="sidebar-toggle" id="sidebarToggle" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>Products</h1>
+                    <p style="margin-top: 8px; color: #64748b; font-size: 14px;">Manage your product catalog and performance</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="action-btn primary" title="Add Product">
+                            Add Product
+                        </button>
+                        <button class="action-btn" title="Export">
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Filters & Toolbar Section -->
+        <div class="products-toolbar">
+            <div class="toolbar-filters">
+                <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">Time Period</label>
+                        <select class="filter-select" id="products-timeFilter">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <select class="filter-select" id="products-categoryFilter">
+                        <option value="all" selected>All Categories</option>
+                        <option value="photo-packs">Photo Packs</option>
+                        <option value="mugs">Mugs</option>
+                        <option value="calendars">Calendars</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                        <select class="filter-select" id="products-statusFilter">
+                        <option value="all" selected>All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Price Range</label>
+                        <select class="filter-select" id="products-priceFilter">
+                            <option value="all" selected>All Prices</option>
+                            <option value="0-100">€0 - €100</option>
+                            <option value="100-500">€100 - €500</option>
+                            <option value="500-1000">€500 - €1000</option>
+                            <option value="1000+">€1000+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Stock State</label>
+                        <select class="filter-select" id="products-stockFilter">
+                            <option value="all" selected>All Stock</option>
+                            <option value="low">Low Stock</option>
+                            <option value="out">Out of Stock</option>
+                            <option value="in">In Stock</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Tags</label>
+                        <select class="filter-select" id="products-tagsFilter">
+                            <option value="all" selected>All Tags</option>
+                            <option value="featured">Featured</option>
+                            <option value="new">New</option>
+                            <option value="popular">Popular</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-actions">
+                    <div class="search-box">
+                        <input type="text" id="products-searchInput" placeholder="Search products..." class="search-input">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Saved Views</label>
+                        <select class="filter-select" id="products-savedViews">
+                            <option value="">Select View</option>
+                            <option value="top-sellers">Top Sellers 30d</option>
+                            <option value="low-stock">Low Stock</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" id="products-saveView" title="Save Current View">
+                            Save
+                        </button>
+                        <button class="action-btn" id="products-bulkUpdate" title="Bulk Update">
+                            Bulk
+                        </button>
+                        <button class="action-btn" id="products-export" title="Export">
+                            Export
+                        </button>
+                        <button class="action-btn" id="products-darkMode" title="Toggle Dark Mode">
+                            Theme
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Key Metrics Section -->
+        <div class="key-metrics-section">
+            <div class="metrics-grid" id="products-kpiGrid">
+                <div class="metric-card">
+                    <div class="metric-icon">📦</div>
+                    <div class="metric-content">
+                        <div class="metric-value" id="products-totalProducts">9</div>
+                        <div class="metric-label">Total Products</div>
+                        <div class="metric-trend positive" id="products-totalProductsDelta">
+                            <span class="trend-icon">↗</span>
+                            <span class="trend-value">+12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-content">
+                        <div class="metric-value" id="products-totalRevenue">€26,500</div>
+                        <div class="metric-label">Total Revenue</div>
+                        <div class="metric-trend positive" id="products-totalRevenueDelta">
+                            <span class="trend-icon">↗</span>
+                            <span class="trend-value">+23.5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-content">
+                        <div class="metric-value" id="products-avgRevenue">€2,944</div>
+                        <div class="metric-label">Avg Revenue/Product</div>
+                        <div class="metric-trend positive" id="products-avgRevenueDelta">
+                            <span class="trend-icon">↗</span>
+                            <span class="trend-value">+9.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">✅</div>
+                    <div class="metric-content">
+                        <div class="metric-value" id="products-activeProducts">8</div>
+                        <div class="metric-label">Active Products</div>
+                        <div class="metric-trend positive" id="products-activeProductsDelta">
+                            <span class="trend-icon">↗</span>
+                            <span class="trend-value">+14%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">⚠️</div>
+                    <div class="metric-content">
+                        <div class="metric-value" id="products-lowStockCount">3</div>
+                        <div class="metric-label">Low Stock Count</div>
+                        <div class="metric-trend negative" id="products-lowStockDelta">
+                            <span class="trend-icon">↘</span>
+                            <span class="trend-value">+2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversion Funnel Section -->
+        <div class="funnel-section">
+            <h3 class="section-title">Conversion Funnel</h3>
+            <div class="funnel-container">
+                <div class="funnel-step">
+                    <div class="funnel-icon">👁️</div>
+                    <div class="funnel-content">
+                        <div class="funnel-value">2,450</div>
+                        <div class="funnel-label">Views</div>
+                        <div class="funnel-percentage">100%</div>
+                    </div>
+                </div>
+                <div class="funnel-arrow">→</div>
+                <div class="funnel-step">
+                    <div class="funnel-icon">🛒</div>
+                    <div class="funnel-content">
+                        <div class="funnel-value">1,225</div>
+                        <div class="funnel-label">Add to Cart</div>
+                        <div class="funnel-percentage">50%</div>
+                    </div>
+                </div>
+                <div class="funnel-arrow">→</div>
+                <div class="funnel-step">
+                    <div class="funnel-icon">💳</div>
+                    <div class="funnel-content">
+                        <div class="funnel-value">735</div>
+                        <div class="funnel-label">Purchased</div>
+                        <div class="funnel-percentage">30%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-grid">
+                <!-- Product Performance Overview -->
+                <div class="chart-container large">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Product Performance Overview</h3>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-view="revenue">Revenue</button>
+                            <button class="chart-tab" data-view="orders">Orders</button>
+                            <button class="chart-tab" data-view="views">Views</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="productPerformanceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Product Revenue Breakdown -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Product Revenue Breakdown</h3>
+                    <div class="revenue-breakdown">
+                        <div class="revenue-item">
+                            <div class="revenue-header">
+                                <div class="revenue-name">Pack S</div>
+                                <div class="revenue-amount">€8,500</div>
+                                <div class="revenue-trend positive">
+                                    <span class="trend-arrow">↗</span>
+                                    <span class="trend-percent">+15.2%</span>
+                                </div>
+                            </div>
+                            <div class="revenue-bar">
+                                <div class="bar-fill" style="width: 100%"></div>
+                            </div>
+                            <div class="revenue-percentage">32.1% of total revenue</div>
+                        </div>
+                        
+                        <div class="revenue-item">
+                            <div class="revenue-header">
+                                <div class="revenue-name">Pack M</div>
+                                <div class="revenue-amount">€6,200</div>
+                                <div class="revenue-trend positive">
+                                    <span class="trend-arrow">↗</span>
+                                    <span class="trend-percent">+8.7%</span>
+                                </div>
+                            </div>
+                            <div class="revenue-bar">
+                                <div class="bar-fill" style="width: 73%"></div>
+                            </div>
+                            <div class="revenue-percentage">23.4% of total revenue</div>
+                        </div>
+                        
+                        <div class="revenue-item">
+                            <div class="revenue-header">
+                                <div class="revenue-name">Pack L</div>
+                                <div class="revenue-amount">€4,800</div>
+                                <div class="revenue-trend negative">
+                                    <span class="trend-arrow">↘</span>
+                                    <span class="trend-percent">-2.1%</span>
+                                </div>
+                            </div>
+                            <div class="revenue-bar">
+                                <div class="bar-fill" style="width: 56%"></div>
+                            </div>
+                            <div class="revenue-percentage">18.1% of total revenue</div>
+                        </div>
+                        
+                        <div class="revenue-item">
+                            <div class="revenue-header">
+                                <div class="revenue-name">Pack XL</div>
+                                <div class="revenue-amount">€3,600</div>
+                                <div class="revenue-trend positive">
+                                    <span class="trend-arrow">↗</span>
+                                    <span class="trend-percent">+5.3%</span>
+                                </div>
+                            </div>
+                            <div class="revenue-bar">
+                                <div class="bar-fill" style="width: 42%"></div>
+                            </div>
+                            <div class="revenue-percentage">13.6% of total revenue</div>
+                        </div>
+                        
+                        <div class="revenue-item">
+                            <div class="revenue-header">
+                                <div class="revenue-name">Pack XXL</div>
+                                <div class="revenue-amount">€2,800</div>
+                                <div class="revenue-trend negative">
+                                    <span class="trend-arrow">↘</span>
+                                    <span class="trend-percent">-12.8%</span>
+                                </div>
+                            </div>
+                            <div class="revenue-bar">
+                                <div class="bar-fill" style="width: 33%"></div>
+                            </div>
+                            <div class="revenue-percentage">10.6% of total revenue</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Product Statistics -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Product Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-content">
+                                <div class="stat-value">9</div>
+                                <div class="stat-label">Total Products</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-content">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Active Products</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card best">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-content">
+                                <div class="stat-value">Pack S</div>
+                                <div class="stat-label">Top Performer</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card worst">
+                            <div class="stat-icon">💤</div>
+                            <div class="stat-content">
+                                <div class="stat-value">Pack XXL</div>
+                                <div class="stat-label">Lowest Performer</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-content">
+                                <div class="stat-value">€2,944</div>
+                                <div class="stat-label">Average Price</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-content">
+                                <div class="stat-value">Excellent</div>
+                                <div class="stat-label">Overall Performance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Suggestions Section -->
+        <div class="suggestions-section">
+            <h3 class="section-title">💡 AI Suggestions</h3>
+            <div class="suggestions-grid">
+                <div class="suggestion-card">
+                    <div class="suggestion-icon">🎯</div>
+                    <div class="suggestion-content">
+                        <div class="suggestion-title">Bundle Pack M + Calendar</div>
+                        <div class="suggestion-description">Create a bundle to increase average order value and boost sales</div>
+                        <div class="suggestion-action">Implement Bundle</div>
+                    </div>
+                </div>
+                
+                <div class="suggestion-card">
+                    <div class="suggestion-icon">📈</div>
+                    <div class="suggestion-content">
+                        <div class="suggestion-title">Promote Pack S</div>
+                        <div class="suggestion-description">Your best performer - consider featuring it prominently on homepage</div>
+                        <div class="suggestion-action">Feature Product</div>
+                    </div>
+                </div>
+                
+                <div class="suggestion-card">
+                    <div class="suggestion-icon">⚠️</div>
+                    <div class="suggestion-content">
+                        <div class="suggestion-title">Review Pack XXL</div>
+                        <div class="suggestion-description">Lowest performer - consider price adjustment or removal</div>
+                        <div class="suggestion-action">Review Pricing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Products Table Section -->
+        <div class="products-table-section">
+            <div class="table-header">
+                <h3 class="section-title">Product Catalog</h3>
+                <div class="table-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="table" title="Table View">
+                            Table
+                        </button>
+                        <button class="view-btn" data-view="grid" title="Grid View">
+                            Grid
+                        </button>
+                    </div>
+                <div class="table-actions">
+                        <div class="pagination-controls">
+                            <select id="products-pageSize" class="page-size-select">
+                                <option value="12" selected>12 per page</option>
+                                <option value="24">24 per page</option>
+                                <option value="48">48 per page</option>
+                            </select>
+                        </div>
+                        <button class="action-btn" id="products-columnChooser" title="Column Chooser">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="products-table" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="products-selectAll"></th>
+                            <th class="sortable" data-sort="name">Product</th>
+                            <th class="sortable" data-sort="category">Category</th>
+                            <th class="sortable" data-sort="price">Price</th>
+                            <th class="sortable" data-sort="units_sold">Units Sold</th>
+                            <th class="sortable" data-sort="revenue">Revenue</th>
+                            <th class="sortable" data-sort="conversion_rate">Conversion Rate</th>
+                            <th class="sortable" data-sort="stock_level">Stock Level</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-info">
+                                        <div class="product-name">Pack S</div>
+                                        <div class="product-id">#PS001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Photo Packs</td>
+                            <td>€300</td>
+                            <td>€8,500</td>
+                            <td>28</td>
+                            <td>
+                                <div class="trend-indicator positive" title="Revenue increased by 15.2% this period">
+                                    <span class="trend-icon">📈</span>
+                                    <span class="trend-value">+15.2%</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-info">
+                                        <div class="product-name">Pack M</div>
+                                        <div class="product-id">#PM002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Photo Packs</td>
+                            <td>€450</td>
+                            <td>€6,200</td>
+                            <td>14</td>
+                            <td>
+                                <div class="trend-indicator positive" title="Revenue increased by 8.7% this period">
+                                    <span class="trend-icon">📈</span>
+                                    <span class="trend-value">+8.7%</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-info">
+                                        <div class="product-name">Pack L</div>
+                                        <div class="product-id">#PL003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Photo Packs</td>
+                            <td>€600</td>
+                            <td>€4,800</td>
+                            <td>8</td>
+                            <td>
+                                <div class="trend-indicator negative" title="Revenue decreased by 2.1% this period">
+                                    <span class="trend-icon">📉</span>
+                                    <span class="trend-value">-2.1%</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-info">
+                                        <div class="product-name">Pack XL</div>
+                                        <div class="product-id">#PXL004</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Photo Packs</td>
+                            <td>€750</td>
+                            <td>€3,600</td>
+                            <td>5</td>
+                            <td>
+                                <div class="trend-indicator positive" title="Revenue increased by 5.3% this period">
+                                    <span class="trend-icon">📈</span>
+                                    <span class="trend-value">+5.3%</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-info">
+                                        <div class="product-name">Pack XXL</div>
+                                        <div class="product-id">#PXXL005</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Photo Packs</td>
+                            <td>€900</td>
+                            <td>€2,800</td>
+                            <td>3</td>
+                            <td>
+                                <div class="trend-indicator negative" title="Revenue decreased by 12.8% this period">
+                                    <span class="trend-icon">📉</span>
+                                    <span class="trend-value">-12.8%</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-inactive">Inactive</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn small" title="View Details">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn small" title="Edit">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                </div>
+            
+            <!-- Grid View Container -->
+            <div class="products-grid-container" id="productsGridContainer" style="display: none;">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Grid items will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="pagination" id="products-pagination">
+                <div class="pagination-info" id="products-paginationInfo">
+                    Showing 1-12 of 13 products
+                </div>
+                <div class="pagination-controls" id="products-paginationControls">
+                    <button class="pagination-btn" disabled>Previous</button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Intelligence Panel -->
+        <div class="inventory-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <div class="title-icon">📦</div>
+                    <h3 class="section-title">Inventory Intelligence</h3>
+                </div>
+                <button class="action-btn primary" id="products-exportRestock" title="Export Restock CSV">
+                    Export Restock CSV
+                </button>
+            </div>
+            <div class="inventory-content">
+                <div class="inventory-section">
+                    <div class="section-header">
+                        <h4 class="subsection-title">⚠️ Low Stock Alert</h4>
+                        <span class="alert-count" id="lowStockCount">3 items</span>
+                    </div>
+                    <div class="low-stock-list" id="products-lowStockList">
+                        <!-- Low stock items will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="inventory-section">
+                    <div class="section-header">
+                        <h4 class="subsection-title">📊 Out of Stock History</h4>
+                        <span class="history-count" id="outOfStockCount">1 item</span>
+                    </div>
+                    <div class="out-of-stock-history" id="products-outOfStockHistory">
+                        <!-- Out of stock history will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Compact tile and funnel styles */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .metric-icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border-radius: 12px;
+            flex-shrink: 0;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover .metric-icon {
+            transform: scale(1.1);
+            color: #764ba2;
+        }
+
+        .metric-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+        }
+
+        .metric-trend.positive {
+            color: #10b981;
+        }
+
+        .metric-trend.negative {
+            color: #ef4444;
+        }
+
+        .trend-icon {
+            font-size: 10px;
+        }
+
+        .trend-value {
+            font-weight: 600;
+        }
+
+        .trend-period {
+            color: #94a3b8;
+            display: none;
+        }
+
+        /* Enhanced conversion funnel */
+        .funnel-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 8px 0;
+        }
+
+        .funnel-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .funnel-step {
+            flex: 1;
+            text-align: center;
+            padding: 16px 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .funnel-step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .funnel-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .funnel-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .funnel-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .funnel-percentage {
+            font-size: 11px;
+            color: #10b981;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .funnel-arrow {
+            font-size: 16px;
+            color: #667eea;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .funnel-arrow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Enhanced Products Styles */
+        .products-toolbar {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+
+
+        .products-toolbar .filter-label {
+            color: #64748b;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .products-toolbar .filter-select {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .products-toolbar .filter-select option {
+            background: white;
+            color: #1e293b;
+        }
+
+        .products-toolbar .search-input {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .products-toolbar .search-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .products-toolbar .search-icon {
+            color: #94a3b8;
+        }
+
+        .toolbar-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: #94a3b8;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn.primary {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #5a67d8;
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8fafc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .view-btn {
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            color: #64748b;
+            position: relative;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .view-btn:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-size-select {
+            padding: 6px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Enhanced Table Styles */
+        .products-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .products-table th.sortable:hover {
+            background: #f8fafc;
+        }
+
+        .price-input {
+            width: 80px;
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .stock-badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .stock-badge.low {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .stock-badge.normal {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .status-toggle {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .status-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #10b981;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Grid View Styles */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .product-image {
+            font-size: 32px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .product-card-body {
+            margin-bottom: 12px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .product-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #64748b;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stock-indicator {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stock-indicator.low {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .stock-indicator.normal {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .product-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Enhanced Inventory Panel Styles */
+        .inventory-panel {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inventory-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #d97706, #b45309);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .inventory-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .inventory-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .inventory-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .alert-count, .history-count {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .low-stock-item, .out-of-stock-item {
+            padding: 16px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .low-stock-item::before, .out-of-stock-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #f59e0b, #d97706);
+        }
+
+        .low-stock-item:hover, .out-of-stock-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .item-stock, .item-details {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .item-suggestion {
+            font-size: 11px;
+            color: #10b981;
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: #10b981;
+            font-size: 14px;
+            font-weight: 500;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 10px;
+            border: 1px dashed rgba(16, 185, 129, 0.3);
+            margin: 8px 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .quick-view-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .mini-funnel {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bulk-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bulk-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bulk-option label {
+            min-width: 100px;
+            font-weight: 600;
+        }
+
+        .bulk-option select, .bulk-option input {
+            padding: 6px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        /* Toast Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .toast {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .toast-success {
+            background: #10b981;
+        }
+
+        .toast-error {
+            background: #ef4444;
+        }
+
+        .toast-info {
+            background: #667eea;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments */
+        /* Additional Beautification */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 1px;
+        }
+
+        .products-table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .products-table th {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            font-weight: 600;
+            color: #374151;
+            padding: 16px 12px;
+        }
+
+        .products-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .products-table tbody tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Pulse Animation for Important Elements */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .funnel-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .funnel-arrow {
+                transform: rotate(90deg);
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .inventory-content {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-view-content {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-toolbar {
+                padding: 16px;
+            }
+
+            .metric-card {
+                padding: 12px;
+            }
+
+            .metric-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .metric-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+
+    <script>
+        // Products-specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSidebarNavigation();
+            setupProductsEventListeners();
+            renderProductCharts();
+        });
+
+        function setupProductsEventListeners() {
+            // Search functionality
+            const searchInput = document.getElementById('searchProducts');
+            if (searchInput) {
+                let searchTimeout;
+                
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        filterProducts(e.target.value);
+                    }, 300);
+                });
+            }
+
+            // Filter functionality
+            const filters = ['timeFilter', 'categoryFilter', 'statusFilter'];
+            filters.forEach(filterId => {
+                const filter = document.getElementById(filterId);
+                if (filter) {
+                    filter.addEventListener('change', () => {
+                        console.log('Filter changed:', filterId, filter.value);
+                        updateDashboard();
+                    });
+                }
+            });
+
+            // Chart tabs
+            const chartTabs = document.querySelectorAll('.chart-tab');
+            chartTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    chartTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    console.log('Chart view changed:', tab.dataset.view);
+                    updateChartView(tab.dataset.view);
+                });
+            });
+
+            // Action buttons
+            const addProductBtn = document.querySelector('.action-btn.primary');
+            const exportBtn = document.querySelector('.action-btn[title="Export"]');
+
+            if (addProductBtn) {
+                addProductBtn.addEventListener('click', () => {
+                    console.log('Adding new product...');
+                    alert('Add product feature coming soon!');
+                });
+            }
+
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    console.log('Exporting products...');
+                    alert('Export feature coming soon!');
+                });
+            }
+        }
+
+        function filterProducts(searchTerm) {
+            console.log('Filtering products with:', searchTerm);
+            // Implement product filtering logic here
+        }
+
+        function updateDashboard() {
+            console.log('Updating dashboard with new filters...');
+            // Implement dashboard update logic here
+        }
+
+        function updateChartView(view) {
+            console.log('Updating chart view to:', view);
+            // Implement chart view update logic here
+        }
+
+        function renderProductCharts() {
+            renderProductPerformanceChart();
+        }
+
+        function renderProductPerformanceChart() {
+            const ctx = document.getElementById('productPerformanceChart');
+            if (!ctx) return;
+            
+            const ctx2d = ctx.getContext('2d');
+            
+            // Top 8 performing products by revenue
+            const labels = ['Pack S', 'Pack M', 'Pack L', 'Pack XL', 'Pack XXL', 'School Mug', 'Keychain', 'Stickers Pack'];
+            const revenueData = [8500, 6200, 4800, 3600, 2800, 1125, 1005, 712];
+            const unitsData = [28, 14, 8, 5, 3, 45, 67, 89];
+
+            new Chart(ctx2d, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Revenue (€)',
+                        data: revenueData,
+                            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 1,
+                            borderRadius: 4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Units Sold',
+                            data: unitsData,
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        return 'Revenue: €' + context.parsed.y.toLocaleString();
+                                    } else {
+                                        return 'Units: ' + context.parsed.y;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            grid: { display: false },
+                            ticks: {
+                                maxRotation: 45,
+                                font: {
+                                    size: 11,
+                                    weight: '500'
+                                }
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            beginAtZero: true,
+                            grid: { color: '#e2e8f0' },
+                            ticks: {
+                                callback: function(value) {
+                                    return '€' + (value / 1000) + 'K';
+                                },
+                                font: {
+                                    size: 11,
+                                    weight: '500'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Revenue (€)',
+                                font: {
+                                    size: 12,
+                                    weight: '600'
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: {
+                                font: {
+                                    size: 11,
+                                    weight: '500'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Units Sold',
+                                font: {
+                                    size: 12,
+                                    weight: '600'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+
+        // Enhanced Products Application
+        const ProductsApp = {
+            state: {
+                products: [],
+                filteredProducts: [],
+                filters: {
+                    timePeriod: '30',
+                    category: 'all',
+                    status: 'all',
+                    priceRange: 'all',
+                    stockState: 'all',
+                    tags: 'all',
+                    search: ''
+                },
+                sort: {
+                    field: 'name',
+                    direction: 'asc'
+                },
+                pagination: {
+                    currentPage: 1,
+                    pageSize: 24
+                },
+                selectedRows: new Set(),
+                savedViews: {},
+                columnVisibility: {
+                    name: true,
+                    category: true,
+                    price: true,
+                    units_sold: true,
+                    revenue: true,
+                    conversion_rate: true,
+                    stock_level: true,
+                    status: true,
+                    updated_at: true
+                },
+                viewMode: 'table'
+            },
+
+            init() {
+                this.generateMockData();
+                this.loadUserPreferences();
+                this.setupEventListeners();
+                this.applyFilters();
+                this.render();
+            },
+
+            generateMockData() {
+                const categories = ['Photo Packs', 'Mugs', 'Calendars', 'Accessories'];
+                const statuses = ['active', 'inactive', 'draft'];
+                const tags = ['featured', 'new', 'popular', 'seasonal'];
+
+                this.state.products = [
+                    {
+                        id: 'PS001',
+                        name: 'Pack S',
+                        category: 'Photo Packs',
+                        price: 300,
+                        units_sold: 28,
+                        revenue: 8500,
+                        conversion_rate: 15.2,
+                        stock_level: 45,
+                        status: 'active',
+                        tags: ['featured', 'popular'],
+                        updated_at: '2024-01-15',
+                        image: '📦',
+                        views: 2450,
+                        add_to_cart: 1225,
+                        purchased: 735
+                    },
+                    {
+                        id: 'PM002',
+                        name: 'Pack M',
+                        category: 'Photo Packs',
+                        price: 450,
+                        units_sold: 14,
+                        revenue: 6200,
+                        conversion_rate: 8.7,
+                        stock_level: 12,
+                        status: 'active',
+                        tags: ['new'],
+                        updated_at: '2024-01-14',
+                        image: '📦',
+                        views: 1800,
+                        add_to_cart: 900,
+                        purchased: 540
+                    },
+                    {
+                        id: 'PL003',
+                        name: 'Pack L',
+                        category: 'Photo Packs',
+                        price: 600,
+                        units_sold: 8,
+                        revenue: 4800,
+                        conversion_rate: -2.1,
+                        stock_level: 8,
+                        status: 'active',
+                        tags: [],
+                        updated_at: '2024-01-13',
+                        image: '📦',
+                        views: 1200,
+                        add_to_cart: 600,
+                        purchased: 360
+                    },
+                    {
+                        id: 'PXL004',
+                        name: 'Pack XL',
+                        category: 'Photo Packs',
+                        price: 750,
+                        units_sold: 5,
+                        revenue: 3600,
+                        conversion_rate: 5.3,
+                        stock_level: 3,
+                        status: 'active',
+                        tags: [],
+                        updated_at: '2024-01-12',
+                        image: '📦',
+                        views: 800,
+                        add_to_cart: 400,
+                        purchased: 240
+                    },
+                    {
+                        id: 'PXXL005',
+                        name: 'Pack XXL',
+                        category: 'Photo Packs',
+                        price: 900,
+                        units_sold: 3,
+                        revenue: 2800,
+                        conversion_rate: -12.8,
+                        stock_level: 0,
+                        status: 'inactive',
+                        tags: [],
+                        updated_at: '2024-01-11',
+                        image: '📦',
+                        views: 500,
+                        add_to_cart: 250,
+                        purchased: 150
+                    },
+                    {
+                        id: 'MUG001',
+                        name: 'School Mug',
+                        category: 'Mugs',
+                        price: 25,
+                        units_sold: 45,
+                        revenue: 1125,
+                        conversion_rate: 12.5,
+                        stock_level: 15,
+                        status: 'active',
+                        tags: ['popular'],
+                        updated_at: '2024-01-10',
+                        image: '☕',
+                        views: 3200,
+                        add_to_cart: 1600,
+                        purchased: 960
+                    },
+                    {
+                        id: 'MUG002',
+                        name: 'Personalized Mug',
+                        category: 'Mugs',
+                        price: 35,
+                        units_sold: 32,
+                        revenue: 1120,
+                        conversion_rate: 9.8,
+                        stock_level: 8,
+                        status: 'active',
+                        tags: ['featured'],
+                        updated_at: '2024-01-09',
+                        image: '☕',
+                        views: 2800,
+                        add_to_cart: 1400,
+                        purchased: 840
+                    },
+                    {
+                        id: 'CAL001',
+                        name: 'School Calendar',
+                        category: 'Calendars',
+                        price: 45,
+                        units_sold: 18,
+                        revenue: 810,
+                        conversion_rate: 6.2,
+                        stock_level: 22,
+                        status: 'active',
+                        tags: ['seasonal'],
+                        updated_at: '2024-01-08',
+                        image: '📅',
+                        views: 1500,
+                        add_to_cart: 750,
+                        purchased: 450
+                    },
+                    {
+                        id: 'CAL002',
+                        name: 'Photo Calendar',
+                        category: 'Calendars',
+                        price: 55,
+                        units_sold: 12,
+                        revenue: 660,
+                        conversion_rate: 4.8,
+                        stock_level: 5,
+                        status: 'active',
+                        tags: [],
+                        updated_at: '2024-01-07',
+                        image: '📅',
+                        views: 1200,
+                        add_to_cart: 600,
+                        purchased: 360
+                    },
+                    {
+                        id: 'ACC001',
+                        name: 'Keychain',
+                        category: 'Accessories',
+                        price: 15,
+                        units_sold: 67,
+                        revenue: 1005,
+                        conversion_rate: 18.3,
+                        stock_level: 28,
+                        status: 'active',
+                        tags: ['popular'],
+                        updated_at: '2024-01-06',
+                        image: '🔑',
+                        views: 4100,
+                        add_to_cart: 2050,
+                        purchased: 1230
+                    },
+                    {
+                        id: 'ACC002',
+                        name: 'Photo Frame',
+                        category: 'Accessories',
+                        price: 40,
+                        units_sold: 23,
+                        revenue: 920,
+                        conversion_rate: 7.1,
+                        stock_level: 12,
+                        status: 'active',
+                        tags: [],
+                        updated_at: '2024-01-05',
+                        image: '🖼️',
+                        views: 1800,
+                        add_to_cart: 900,
+                        purchased: 540
+                    },
+                    {
+                        id: 'ACC003',
+                        name: 'Stickers Pack',
+                        category: 'Accessories',
+                        price: 8,
+                        units_sold: 89,
+                        revenue: 712,
+                        conversion_rate: 22.1,
+                        stock_level: 35,
+                        status: 'active',
+                        tags: ['new', 'popular'],
+                        updated_at: '2024-01-04',
+                        image: '🏷️',
+                        views: 5200,
+                        add_to_cart: 2600,
+                        purchased: 1560
+                    }
+                ];
+            },
+
+            setupEventListeners() {
+                // Filter event listeners
+                document.querySelectorAll('[id^="products-"]').forEach(element => {
+                    if (element.tagName === 'SELECT') {
+                        element.addEventListener('change', () => this.handleFilterChange());
+                    }
+                });
+
+                // Search input
+                const searchInput = document.getElementById('products-searchInput');
+                if (searchInput) {
+                    let searchTimeout;
+                    searchInput.addEventListener('input', (e) => {
+                        clearTimeout(searchTimeout);
+                        searchTimeout = setTimeout(() => {
+                            this.state.filters.search = e.target.value;
+                            this.applyFilters();
+                        }, 300);
+                    });
+                }
+
+                // View toggle
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                        e.target.closest('.view-btn').classList.add('active');
+                        this.state.viewMode = e.target.closest('.view-btn').dataset.view;
+                        this.toggleView();
+                    });
+                });
+
+                // Sortable columns
+                document.querySelectorAll('.sortable').forEach(th => {
+                    th.addEventListener('click', () => {
+                        const field = th.dataset.sort;
+                        if (this.state.sort.field === field) {
+                            this.state.sort.direction = this.state.sort.direction === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            this.state.sort.field = field;
+                            this.state.sort.direction = 'asc';
+                        }
+                        this.applySorting();
+                    });
+                });
+
+                // Action buttons
+                document.getElementById('products-saveView')?.addEventListener('click', () => this.saveCurrentView());
+                document.getElementById('products-bulkUpdate')?.addEventListener('click', () => this.showBulkModal());
+                document.getElementById('products-export')?.addEventListener('click', () => this.exportData());
+                document.getElementById('products-exportRestock')?.addEventListener('click', () => this.exportRestockCSV());
+            },
+
+            handleFilterChange() {
+                this.state.filters.timePeriod = document.getElementById('products-timeFilter')?.value || '30';
+                this.state.filters.category = document.getElementById('products-categoryFilter')?.value || 'all';
+                this.state.filters.status = document.getElementById('products-statusFilter')?.value || 'all';
+                this.state.filters.priceRange = document.getElementById('products-priceFilter')?.value || 'all';
+                this.state.filters.stockState = document.getElementById('products-stockFilter')?.value || 'all';
+                this.state.filters.tags = document.getElementById('products-tagsFilter')?.value || 'all';
+                
+                this.applyFilters();
+            },
+
+            applyFilters() {
+                this.state.filteredProducts = this.state.products.filter(product => {
+                    // Category filter
+                    if (this.state.filters.category !== 'all' && product.category !== this.state.filters.category) {
+                        return false;
+                    }
+
+                    // Status filter
+                    if (this.state.filters.status !== 'all' && product.status !== this.state.filters.status) {
+                        return false;
+                    }
+
+                    // Price range filter
+                    if (this.state.filters.priceRange !== 'all') {
+                        const [min, max] = this.state.filters.priceRange.split('-').map(Number);
+                        if (max && (product.price < min || product.price > max)) {
+                            return false;
+                        } else if (!max && product.price < min) {
+                            return false;
+                        }
+                    }
+
+                    // Stock state filter
+                    if (this.state.filters.stockState !== 'all') {
+                        if (this.state.filters.stockState === 'low' && product.stock_level > 10) {
+                            return false;
+                        } else if (this.state.filters.stockState === 'out' && product.stock_level > 0) {
+                            return false;
+                        } else if (this.state.filters.stockState === 'in' && product.stock_level <= 0) {
+                            return false;
+                        }
+                    }
+
+                    // Tags filter
+                    if (this.state.filters.tags !== 'all' && !product.tags.includes(this.state.filters.tags)) {
+                        return false;
+                    }
+
+                    // Search filter
+                    if (this.state.filters.search) {
+                        const searchTerm = this.state.filters.search.toLowerCase();
+                        const searchableText = [
+                            product.name,
+                            product.id,
+                            product.category
+                        ].join(' ').toLowerCase();
+                        
+                        if (!searchableText.includes(searchTerm)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                this.applySorting();
+                this.updateKPIs();
+                this.render();
+            },
+
+            applySorting() {
+                this.state.filteredProducts.sort((a, b) => {
+                    let aVal, bVal;
+
+                    switch (this.state.sort.field) {
+                        case 'name':
+                            aVal = a.name.toLowerCase();
+                            bVal = b.name.toLowerCase();
+                            break;
+                        case 'price':
+                            aVal = a.price;
+                            bVal = b.price;
+                            break;
+                        case 'revenue':
+                            aVal = a.revenue;
+                            bVal = b.revenue;
+                            break;
+                        case 'units_sold':
+                            aVal = a.units_sold;
+                            bVal = b.units_sold;
+                            break;
+                        case 'stock_level':
+                            aVal = a.stock_level;
+                            bVal = b.stock_level;
+                            break;
+                        case 'updated_at':
+                            aVal = new Date(a.updated_at);
+                            bVal = new Date(b.updated_at);
+                            break;
+                        default:
+                            aVal = a[this.state.sort.field];
+                            bVal = b[this.state.sort.field];
+                    }
+
+                    if (this.state.sort.direction === 'asc') {
+                        return aVal > bVal ? 1 : -1;
+                    } else {
+                        return aVal < bVal ? 1 : -1;
+                    }
+                });
+            },
+
+            updateKPIs() {
+                const totalProducts = this.state.filteredProducts.length;
+                const totalRevenue = this.state.filteredProducts.reduce((sum, p) => sum + p.revenue, 0);
+                const avgRevenue = totalProducts > 0 ? totalRevenue / totalProducts : 0;
+                const activeProducts = this.state.filteredProducts.filter(p => p.status === 'active').length;
+                const lowStockCount = this.state.filteredProducts.filter(p => p.stock_level <= 10 && p.stock_level > 0).length;
+
+                // Update KPI values
+                document.getElementById('products-totalProducts').textContent = totalProducts;
+                document.getElementById('products-totalRevenue').textContent = `€${totalRevenue.toLocaleString()}`;
+                document.getElementById('products-avgRevenue').textContent = `€${avgRevenue.toFixed(0)}`;
+                document.getElementById('products-activeProducts').textContent = activeProducts;
+                document.getElementById('products-lowStockCount').textContent = lowStockCount;
+
+                // Calculate deltas (simplified)
+                const previousTotal = this.state.products.length;
+                const previousRevenue = this.state.products.reduce((sum, p) => sum + p.revenue, 0);
+                
+                const totalDelta = previousTotal > 0 ? ((totalProducts - previousTotal) / previousTotal) * 100 : 0;
+                const revenueDelta = previousRevenue > 0 ? ((totalRevenue - previousRevenue) / previousRevenue) * 100 : 0;
+
+                this.updateDeltaBadge('products-totalProductsDelta', totalDelta);
+                this.updateDeltaBadge('products-totalRevenueDelta', revenueDelta);
+                this.updateDeltaBadge('products-avgRevenueDelta', revenueDelta);
+                this.updateDeltaBadge('products-activeProductsDelta', totalDelta);
+            },
+
+            updateDeltaBadge(elementId, delta) {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    const isPositive = delta >= 0;
+                    element.className = `metric-trend ${isPositive ? 'positive' : 'negative'}`;
+                    element.innerHTML = `
+                        <span class="trend-icon">${isPositive ? '↗' : '↘'}</span>
+                        <span class="trend-value">${Math.abs(delta).toFixed(1)}%</span>
+                    `;
+                }
+            },
+
+            toggleView() {
+                const tableContainer = document.querySelector('.table-container');
+                const gridContainer = document.getElementById('productsGridContainer');
+                
+                if (this.state.viewMode === 'table') {
+                    tableContainer.style.display = 'block';
+                    gridContainer.style.display = 'none';
+                } else {
+                    tableContainer.style.display = 'none';
+                    gridContainer.style.display = 'block';
+                    this.renderGridView();
+                }
+            },
+
+            render() {
+                this.renderTableView();
+                this.renderInventoryPanel();
+                this.saveUserPreferences();
+            },
+
+            renderTableView() {
+                const tbody = document.getElementById('productsTableBody');
+                if (!tbody) return;
+
+                const startIndex = (this.state.pagination.currentPage - 1) * this.state.pagination.pageSize;
+                const endIndex = startIndex + this.state.pagination.pageSize;
+                const pageProducts = this.state.filteredProducts.slice(startIndex, endIndex);
+
+                tbody.innerHTML = pageProducts.map(product => `
+                    <tr data-product-id="${product.id}">
+                        <td>
+                            <input type="checkbox" class="row-checkbox" value="${product.id}" 
+                                   ${this.state.selectedRows.has(product.id) ? 'checked' : ''}>
+                        </td>
+                        <td>
+                            <div class="product-cell">
+                                <div class="product-info">
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-id">#${product.id}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${product.category}</td>
+                        <td>
+                            <input type="number" class="price-input" value="${product.price}" 
+                                   data-product-id="${product.id}" data-original="${product.price}">
+                        </td>
+                        <td>${product.units_sold}</td>
+                        <td>€${product.revenue.toLocaleString()}</td>
+                        <td>
+                            <div class="trend-indicator ${product.conversion_rate >= 0 ? 'positive' : 'negative'}">
+                                <span class="trend-icon">${product.conversion_rate >= 0 ? '📈' : '📉'}</span>
+                                <span class="trend-value">${Math.abs(product.conversion_rate)}%</span>
+                            </div>
+                        </td>
+                                                <td>
+                            <span class="stock-badge ${product.stock_level <= 10 ? 'low' : 'normal'}">
+                                ${product.stock_level}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+
+                this.updatePagination();
+            },
+
+            renderGridView() {
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+
+                const startIndex = (this.state.pagination.currentPage - 1) * this.state.pagination.pageSize;
+                const endIndex = startIndex + this.state.pagination.pageSize;
+                const pageProducts = this.state.filteredProducts.slice(startIndex, endIndex);
+
+                grid.innerHTML = pageProducts.map(product => `
+                    <div class="product-card" data-product-id="${product.id}">
+                        <div class="product-card-header">
+                            <div class="product-status">
+                                <label class="status-toggle">
+                                    <input type="checkbox" ${product.status === 'active' ? 'checked' : ''} 
+                                           data-product-id="${product.id}">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="product-card-body">
+                            <h4 class="product-name">${product.name}</h4>
+                            <div class="product-price">€${product.price}</div>
+                            <div class="product-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Units:</span>
+                                    <span class="stat-value">${product.units_sold}</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Revenue:</span>
+                                    <span class="stat-value">€${product.revenue.toLocaleString()}</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Conv:</span>
+                                    <span class="stat-value">${product.conversion_rate}%</span>
+                                </div>
+                            </div>
+                            <div class="stock-indicator ${product.stock_level <= 10 ? 'low' : 'normal'}">
+                                Stock: ${product.stock_level}
+                            </div>
+                        </div>
+                        <div class="product-card-actions">
+                            <button class="action-btn small" onclick="ProductsApp.showQuickView('${product.id}')">View</button>
+                            <button class="action-btn small">Edit</button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            renderInventoryPanel() {
+                const lowStockList = document.getElementById('products-lowStockList');
+                const outOfStockHistory = document.getElementById('products-outOfStockHistory');
+                const lowStockCount = document.getElementById('lowStockCount');
+                const outOfStockCount = document.getElementById('outOfStockCount');
+
+                if (lowStockList) {
+                    const lowStockProducts = this.state.filteredProducts.filter(p => p.stock_level <= 10 && p.stock_level > 0);
+                    
+                    if (lowStockCount) {
+                        lowStockCount.textContent = `${lowStockProducts.length} item${lowStockProducts.length !== 1 ? 's' : ''}`;
+                    }
+                    
+                    lowStockList.innerHTML = lowStockProducts.map(product => `
+                        <div class="low-stock-item">
+                            <div class="item-info">
+                                <div class="item-name">${product.name}</div>
+                                <div class="item-stock">Current Stock: ${product.stock_level} units</div>
+                                <div class="item-details">Last 30 days: ${product.units_sold} sold</div>
+                            </div>
+                            <div class="item-suggestion">
+                                Suggested reorder: ${Math.max(20, Math.ceil(product.units_sold * 0.3))} units
+                            </div>
+                        </div>
+                    `).join('') || '<div class="empty-state">✅ All products well stocked</div>';
+                }
+
+                if (outOfStockHistory) {
+                    const outOfStockProducts = this.state.filteredProducts.filter(p => p.stock_level === 0);
+                    
+                    if (outOfStockCount) {
+                        outOfStockCount.textContent = `${outOfStockProducts.length} item${outOfStockProducts.length !== 1 ? 's' : ''}`;
+                    }
+                    
+                    outOfStockHistory.innerHTML = outOfStockProducts.map(product => `
+                        <div class="out-of-stock-item">
+                            <div class="item-info">
+                                <div class="item-name">${product.name}</div>
+                                <div class="item-details">
+                                    <div>Last in stock: ${new Date(product.updated_at).toLocaleDateString()}</div>
+                                    <div>Average recovery time: 14 days</div>
+                                    <div>Monthly demand: ${product.units_sold} units</div>
+                                </div>
+                            </div>
+                            <div class="item-suggestion">
+                                Restock priority: High
+                            </div>
+                        </div>
+                    `).join('') || '<div class="empty-state">✅ No out of stock items</div>';
+                }
+            },
+
+            updatePagination() {
+                const totalPages = Math.ceil(this.state.filteredProducts.length / this.state.pagination.pageSize);
+                const info = document.getElementById('products-paginationInfo');
+                const controls = document.getElementById('products-paginationControls');
+
+                if (info) {
+                    const start = (this.state.pagination.currentPage - 1) * this.state.pagination.pageSize + 1;
+                    const end = Math.min(this.state.pagination.currentPage * this.state.pagination.pageSize, this.state.filteredProducts.length);
+                    info.textContent = `Showing ${start}-${end} of ${this.state.filteredProducts.length} products`;
+                }
+
+                if (controls) {
+                    controls.innerHTML = `
+                        <button class="pagination-btn" ${this.state.pagination.currentPage === 1 ? 'disabled' : ''} 
+                                onclick="ProductsApp.changePage(${this.state.pagination.currentPage - 1})">Previous</button>
+                        ${Array.from({length: Math.min(5, totalPages)}, (_, i) => {
+                            const page = i + 1;
+                            return `<button class="pagination-btn ${page === this.state.pagination.currentPage ? 'active' : ''}" 
+                                           onclick="ProductsApp.changePage(${page})">${page}</button>`;
+                        }).join('')}
+                        <button class="pagination-btn" ${this.state.pagination.currentPage === totalPages ? 'disabled' : ''} 
+                                onclick="ProductsApp.changePage(${this.state.pagination.currentPage + 1})">Next</button>
+                    `;
+                }
+            },
+
+            changePage(page) {
+                const totalPages = Math.ceil(this.state.filteredProducts.length / this.state.pagination.pageSize);
+                if (page >= 1 && page <= totalPages) {
+                    this.state.pagination.currentPage = page;
+                    this.render();
+                }
+            },
+
+            showQuickView(productId) {
+                const product = this.state.products.find(p => p.id === productId);
+                if (!product) return;
+
+                const modal = document.getElementById('products-quickViewModal');
+                const modalBody = document.getElementById('products-modalBody');
+                const modalTitle = document.getElementById('products-modalTitle');
+
+                modalTitle.textContent = product.name;
+                modalBody.innerHTML = `
+                    <div class="quick-view-content">
+                        <div class="product-details">
+                            <div class="detail-row">
+                                <span class="detail-label">ID:</span>
+                                <span class="detail-value">${product.id}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Category:</span>
+                                <span class="detail-value">${product.category}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Price:</span>
+                                <span class="detail-value">€${product.price}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Stock:</span>
+                                <span class="detail-value">${product.stock_level}</span>
+                            </div>
+                        </div>
+                        <div class="product-funnel">
+                            <h4>Conversion Funnel</h4>
+                            <div class="mini-funnel">
+                                <div class="funnel-step">
+                                    <div class="funnel-value">${product.views}</div>
+                                    <div class="funnel-label">Views</div>
+                                </div>
+                                <div class="funnel-arrow">→</div>
+                                <div class="funnel-step">
+                                    <div class="funnel-value">${product.add_to_cart}</div>
+                                    <div class="funnel-label">Add to Cart</div>
+                                </div>
+                                <div class="funnel-arrow">→</div>
+                                <div class="funnel-step">
+                                    <div class="funnel-value">${product.purchased}</div>
+                                    <div class="funnel-label">Purchased</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                modal.style.display = 'block';
+            },
+
+            showBulkModal() {
+                const modal = document.getElementById('products-bulkModal');
+                modal.style.display = 'block';
+            },
+
+            saveCurrentView() {
+                const viewName = prompt('Enter a name for this view:');
+                if (viewName) {
+                    this.state.savedViews[viewName] = {
+                        filters: {...this.state.filters},
+                        sort: {...this.state.sort},
+                        pagination: {...this.state.pagination},
+                        columnVisibility: {...this.state.columnVisibility}
+                    };
+                    this.saveUserPreferences();
+                    this.showToast('View saved successfully!', 'success');
+                }
+            },
+
+            exportData() {
+                const csvContent = this.generateCSV();
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `products_export_${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+                this.showToast('Export completed!', 'success');
+            },
+
+            exportRestockCSV() {
+                const lowStockProducts = this.state.filteredProducts.filter(p => p.stock_level <= 10);
+                const csvContent = this.generateRestockCSV(lowStockProducts);
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `restock_list_${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+                this.showToast('Restock CSV exported!', 'success');
+            },
+
+            generateCSV() {
+                const headers = ['ID', 'Name', 'Category', 'Price', 'Units Sold', 'Revenue', 'Stock Level', 'Status'];
+                const rows = this.state.filteredProducts.map(p => [
+                    p.id, p.name, p.category, p.price, p.units_sold, p.revenue, p.stock_level, p.status
+                ]);
+                return [headers, ...rows].map(row => row.join(',')).join('\n');
+            },
+
+            generateRestockCSV(products) {
+                const headers = ['Product ID', 'Product Name', 'Current Stock', 'Suggested Reorder'];
+                const rows = products.map(p => [
+                    p.id, p.name, p.stock_level, Math.max(20, p.units_sold * 0.3)
+                ]);
+                return [headers, ...rows].map(row => row.join(',')).join('\n');
+            },
+
+            showToast(message, type = 'info') {
+                const container = document.getElementById('products-toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+                container.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            },
+
+            loadUserPreferences() {
+                const saved = localStorage.getItem('productsAppState');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    this.state = {...this.state, ...parsed};
+                }
+            },
+
+            saveUserPreferences() {
+                localStorage.setItem('productsAppState', JSON.stringify(this.state));
+            }
+        };
+
+        // Initialize the enhanced products app
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSidebarNavigation();
+            ProductsApp.init();
+            renderProductCharts();
+        });
+    </script>
+</body>
+</html>

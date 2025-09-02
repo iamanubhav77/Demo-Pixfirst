@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This Season - Photographer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <style>
+        /* Enhanced This Season Page Styling */
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        .season-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .season-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .season-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .season-header p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin: 0.3rem 0 0 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .season-header .last-updated {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+        
+        .dashboard-metrics-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-metrics-header {
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 12px 16px;
+        }
+        
+        .dashboard-metrics-header .section-title {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .dashboard-metrics-content {
+            padding: 16px;
+        }
+        
+        .dashboard-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .dashboard-metric-card {
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+            min-height: 100px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .dashboard-metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .dashboard-metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .dashboard-metric-card:hover::before {
+            opacity: 1;
+        }
+        
+        .dashboard-metric-card .metric-icon {
+            font-size: 18px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+        
+        .dashboard-metric-card .metric-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+        
+        .dashboard-metric-card .metric-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .dashboard-metric-card .metric-growth {
+            font-size: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .unified-metrics-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        
+        .unified-metrics-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .metrics-section-header {
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .metrics-section-header:last-child {
+            border-right: none;
+        }
+        
+        .unified-metrics-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .metrics-section {
+            padding: 16px;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .metrics-section:last-child {
+            border-right: none;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .metric-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .metric-card:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-card .metric-icon {
+            font-size: 14px;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+        
+        .metric-card .metric-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        
+        .metric-card .metric-label {
+            font-size: 8px;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            line-height: 1.2;
+        }
+        
+        .metric-card .metric-growth {
+            font-size: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+        
+        .metric-card .metric-growth.positive {
+            color: #059669;
+        }
+        
+        .metric-card .metric-growth.negative {
+            color: #dc2626;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        
+        .insights-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            color: white;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .insight-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-right: 40px;
+        }
+        
+        .insight-icon {
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        
+        .insight-text {
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        
+        .insight-text strong {
+            font-weight: 700;
+            color: #fbbf24;
+        }
+        
+        .unified-table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        
+        .unified-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+            font-size: 11px;
+        }
+        
+        .table-header-row th {
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+            background: #f8fafc;
+        }
+        
+        .table-row td {
+            padding: 10px 8px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .school-cell {
+            font-weight: 500;
+            color: #1e293b;
+            font-size: 11px;
+        }
+        
+        .year-data .revenue {
+            font-weight: 700;
+            color: #059669;
+            font-size: 11px;
+        }
+        
+        .year-data .orders {
+            font-weight: 400;
+            color: #64748b;
+            font-size: 9px;
+        }
+        
+        .growth-cell {
+            text-align: center;
+            font-weight: 600;
+            font-size: 10px;
+            transition: transform 0.2s ease;
+        }
+        
+        .growth-cell:hover {
+            transform: scale(1.05);
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .chart-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        
+        .chart-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 180px;
+        }
+        
+        .products-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-name {
+            font-size: 10px;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .product-sales {
+            font-size: 10px;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        
+        .product-percentage {
+            font-size: 8px;
+            color: #6b7280;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .product-bar {
+            height: 4px;
+            background-color: #f3f4f6;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .breakdown-table {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 10px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .breakdown-row.total {
+            font-weight: 600;
+            border-top: 2px solid #e5e7eb;
+            border-bottom: none;
+            padding-top: 8px;
+            margin-top: 6px;
+        }
+        
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 12px;
+            height: 12px;
+            background: #e2e8f0;
+            color: #64748b;
+            border-radius: 50%;
+            font-size: 8px;
+            font-weight: 600;
+            cursor: help;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .tooltip-icon:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .tooltip-icon:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 400;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tooltip-icon:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid transparent;
+            border-top-color: #1e293b;
+            margin-bottom: 3px;
+        }
+        
+        .download-csv-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-csv-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .download-csv-btn svg {
+            width: 12px;
+            height: 12px;
+        }
+        
+        .funnel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .collapse-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            color: #64748b;
+            transition: all 0.2s ease;
+        }
+        
+        .collapse-btn:hover {
+            background: #f1f5f9;
+            color: #374151;
+        }
+        
+        .collapse-btn svg {
+            transition: transform 0.2s ease;
+        }
+        
+        .collapse-btn.collapsed svg {
+            transform: rotate(-90deg);
+        }
+        
+        .funnel-metrics-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .funnel-metrics-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-metrics-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            
+            .unified-metrics-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-section {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
+            .metrics-section:last-child {
+                border-bottom: none;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .dashboard-metric-card,
+            .metric-card {
+                padding: 10px;
+                min-height: 80px;
+            }
+            
+            .dashboard-metric-card .metric-number {
+                font-size: 16px;
+            }
+            
+            .metric-card .metric-number {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Side Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <a href="this-season.html" class="nav-item active" data-page="this-season">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    This season
+                </a>
+
+                <a href="analytics.html" class="nav-item" data-page="analytics">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                    </svg>
+                    Analytics
+                </a>
+                <a href="orders.html" class="nav-item" data-page="orders">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    Orders
+                </a>
+                <a href="products.html" class="nav-item" data-page="products">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg>
+                    Products
+                </a>
+                <a href="schools.html" class="nav-item" data-page="schools">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                    Schools
+                </a>
+
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Settings</div>
+                <a href="settings.html" class="nav-item" data-page="settings">
+                    <svg class="nav-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile sidebar toggle button -->
+    <button class="sidebar-toggle" id="sidebarToggle" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="container">
+        <!-- This Season Header -->
+        <div class="season-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>This Season</h1>
+                    <p>Track your seasonal performance and school metrics</p>
+                    <p class="last-updated">Last updated: August 8, 2025 at 3:40 PM</p>
+                </div>
+                <div class="header-right">
+                    <div class="date-selector">
+                        <span style="color: rgba(255,255,255,0.8); font-size: 11px; margin-right: 8px;">Season:</span>
+                        <span style="font-weight: 500; font-size: 12px;">June 1, 2025 - August 31, 2025</span>
+                    </div>
+                    <div class="header-actions">
+                        <div class="time-filter">
+                            <select id="timeRangeFilter" class="filter-select" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 11px;">
+                                <option value="this-season">This Season</option>
+                                <option value="last-season">Last Season</option>
+                                <option value="this-month">This Month</option>
+                                <option value="last-30-days">Last 30 Days</option>
+                                <option value="custom-range">Custom Range</option>
+                            </select>
+                        </div>
+                        <button class="action-btn" title="Refresh" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn" title="Export" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-3"/>
+                                <path d="M16 3v4"/>
+                                <path d="M8 3v4"/>
+                                <path d="M4 11h16"/>
+                            </svg>
+                        </button>
+                        <button class="customize-btn" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 11px;">Customize</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Season Overview Section -->
+        <div class="dashboard-metrics-section">
+            <div class="dashboard-metrics-header">
+                <h3 class="section-title">Season Overview</h3>
+            </div>
+            <div class="dashboard-metrics-content">
+                <div class="dashboard-metrics-grid">
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-number">€35,500</div>
+                    <div class="metric-label">
+                        Season Revenue
+                        <span class="tooltip-icon" title="Total sales collected from all orders">?</span>
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +25.9%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">🏫</div>
+                    <div class="metric-number">45</div>
+                    <div class="metric-label">
+                        Schools Onboarded
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +12.5%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-number">38</div>
+                    <div class="metric-label">
+                        Schools with Sales
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +8.7%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-number">1,250</div>
+                    <div class="metric-label">
+                        Total Kids
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +18.3%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">👤</div>
+                    <div class="metric-number">980</div>
+                    <div class="metric-label">
+                        Unique Kids
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +15.7%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">💳</div>
+                    <div class="metric-number">€36.20</div>
+                    <div class="metric-label">
+                        Sales per Kid
+                        <span class="tooltip-icon" title="Average revenue generated per individual child">?</span>
+                    </div>
+                    <div class="metric-growth negative">
+                        <span class="growth-arrow">↘</span>
+                        -2.1%
+                    </div>
+                </div>
+                
+                <div class="dashboard-metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-number">65.5%</div>
+                    <div class="metric-label">
+                        AB by Order
+                        <span class="tooltip-icon" title="% of kids who received AB pack in their order">?</span>
+                    </div>
+                    <div class="metric-growth positive">
+                        <span class="growth-arrow">↗</span>
+                        +8.9%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Metrics Table -->
+        <div class="unified-metrics-table">
+            <div class="unified-metrics-header">
+                <div class="metrics-section-header">Customer (Kid) Metrics</div>
+                <div class="metrics-section-header">Funnel Metrics (Drop-off Analysis)</div>
+            </div>
+            <div class="unified-metrics-content">
+                <div class="metrics-section">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-number">78.4%</div>
+                            <div class="metric-label">
+                                Order Penetration
+                                <span class="tooltip-icon" title="Unique Kids who ordered ÷ Total Kids (in %)">?</span>
+                            </div>
+                            <div class="metric-growth positive">
+                                <span class="growth-arrow">↗</span>
+                                +5.2%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">🔄</div>
+                            <div class="metric-number">23.1%</div>
+                            <div class="metric-label">
+                                Multi-Order Rate
+                                <span class="tooltip-icon" title="% of Kids placing more than 1 order">?</span>
+                            </div>
+                            <div class="metric-growth positive">
+                                <span class="growth-arrow">↗</span>
+                                +8.7%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">👨‍👩‍👧‍👦</div>
+                            <div class="metric-number">42.8%</div>
+                            <div class="metric-label">
+                                Repeat Customer Rate
+                                <span class="tooltip-icon" title="% of parents who ordered in past seasons (if data available)">?</span>
+                            </div>
+                            <div class="metric-growth positive">
+                                <span class="growth-arrow">↗</span>
+                                +12.3%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metrics-section">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🛒</div>
+                            <div class="metric-number">18.5%</div>
+                            <div class="metric-label">
+                                Cart Abandonment Rate
+                                <span class="tooltip-icon" title="% of users who added to cart but didn't checkout">?</span>
+                            </div>
+                            <div class="metric-growth negative">
+                                <span class="growth-arrow">↘</span>
+                                +2.1%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">👁️</div>
+                            <div class="metric-number">34.2%</div>
+                            <div class="metric-label">
+                                Sessions with No Orders
+                                <span class="tooltip-icon" title="People who browsed but didn't buy">?</span>
+                            </div>
+                            <div class="metric-growth negative">
+                                <span class="growth-arrow">↘</span>
+                                +1.8%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">🏠</div>
+                            <div class="metric-number">22.7%</div>
+                            <div class="metric-label">
+                                Bounce Rate from Homepage
+                                <span class="tooltip-icon" title="Drop-off immediately after landing (if trackable)">?</span>
+                            </div>
+                            <div class="metric-growth positive">
+                                <span class="growth-arrow">↗</span>
+                                -3.4%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrolling Smart Insights Banner -->
+        <div class="insights-section">
+            <div class="insights-card">
+                <div class="insights-marquee">
+                    <div class="marquee-content">
+                        <span class="insight-item">
+                            <span class="insight-icon">📈</span>
+                            <span class="insight-text">Highest YoY Growth: <strong>Bright Future Elementary</strong> (+15.5%)</span>
+                        </span>
+                        <span class="insight-item">
+                            <span class="insight-icon">📉</span>
+                            <span class="insight-text">Biggest Drop in Orders: <strong>Central High School</strong> (-11.1%)</span>
+                        </span>
+                        <span class="insight-item">
+                            <span class="insight-icon">📈</span>
+                            <span class="insight-text">Highest YoY Growth: <strong>Bright Future Elementary</strong> (+15.5%)</span>
+                        </span>
+                        <span class="insight-item">
+                            <span class="insight-icon">📉</span>
+                            <span class="insight-text">Biggest Drop in Orders: <strong>Central High School</strong> (-11.1%)</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Schools Comparison Table -->
+        <div class="unified-table-section">
+            <div class="table-header">
+                <h3 class="section-title">Schools Performance Comparison</h3>
+                <button class="download-csv-btn" onclick="downloadCSV()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download CSV
+                </button>
+            </div>
+            <div class="unified-table-container">
+                <table class="unified-table">
+                    <thead>
+                        <tr class="table-header-row">
+                            <th class="school-col">School (Top 5)</th>
+                            <th class="year-col">Last Year</th>
+                            <th class="year-col">This Year</th>
+                            <th class="growth-col">Growth %</th>
+                            <th class="trend-col">Trend</th>
+                            <th class="divider-col"></th>
+                            <th class="school-col">School (Bottom 5)</th>
+                            <th class="year-col">Last Year</th>
+                            <th class="year-col">This Year</th>
+                            <th class="growth-col">Growth %</th>
+                            <th class="trend-col">Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-row">
+                            <td class="school-cell" title="📍 Bright Future Elementary&#10;Location: California&#10;Segment: Suburban">Bright Future Elementary</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,200</div>
+                                    <div class="orders">35 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,850</div>
+                                    <div class="orders">38 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +15.5%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €4,200 (35 orders) | This Year: €4,850 (38 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 70%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 100%"></div>
+                                </div>
+                            </td>
+                            <td class="divider-cell"></td>
+                            <td class="school-cell" title="📍 Central High School&#10;Location: Texas&#10;Segment: Urban">Central High School</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,500</div>
+                                    <div class="orders">36 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,200</div>
+                                    <div class="orders">32 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell negative">🔽 -6.7%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €4,500 (36 orders) | This Year: €4,200 (32 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 100%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 75%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="school-cell" title="📍 St. Mary's Academy&#10;Location: Texas&#10;Segment: Urban">St. Mary's Academy</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,800</div>
+                                    <div class="orders">40 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€5,400</div>
+                                    <div class="orders">45 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +12.5%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €4,800 (40 orders) | This Year: €5,400 (45 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 80%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 100%"></div>
+                                </div>
+                            </td>
+                            <td class="divider-cell"></td>
+                            <td class="school-cell" title="📍 Riverside Elementary&#10;Location: California&#10;Segment: Suburban">Riverside Elementary</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,900</div>
+                                    <div class="orders">30 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,700</div>
+                                    <div class="orders">28 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell negative">🔽 -5.1%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,900 (30 orders) | This Year: €3,700 (28 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 90%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 80%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="school-cell" title="📍 Innovation Academy&#10;Location: Massachusetts&#10;Segment: Suburban">Innovation Academy</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,200</div>
+                                    <div class="orders">22 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,600</div>
+                                    <div class="orders">26 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +12.5%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,200 (22 orders) | This Year: €3,600 (26 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 65%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 80%"></div>
+                                </div>
+                            </td>
+                            <td class="divider-cell"></td>
+                            <td class="school-cell" title="📍 Oakwood Middle School&#10;Location: Florida&#10;Segment: Rural">Oakwood Middle School</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,400</div>
+                                    <div class="orders">24 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,300</div>
+                                    <div class="orders">23 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell negative">🔽 -2.9%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,400 (24 orders) | This Year: €3,300 (23 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 85%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 80%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="school-cell" title="📍 Sunshine Primary&#10;Location: Arizona&#10;Segment: Suburban">Sunshine Primary</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,600</div>
+                                    <div class="orders">25 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,950</div>
+                                    <div class="orders">29 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +9.7%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,600 (25 orders) | This Year: €3,950 (29 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 75%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 85%"></div>
+                                </div>
+                            </td>
+                            <td class="divider-cell"></td>
+                            <td class="school-cell" title="📍 Maple Street Academy&#10;Location: New York&#10;Segment: Urban">Maple Street Academy</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,100</div>
+                                    <div class="orders">20 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,050</div>
+                                    <div class="orders">19 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell negative">🔽 -1.6%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,100 (20 orders) | This Year: €3,050 (19 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 80%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 75%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="school-cell" title="📍 Excellence Prep School&#10;Location: Illinois&#10;Segment: Urban">Excellence Prep School</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€3,800</div>
+                                    <div class="orders">28 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€4,100</div>
+                                    <div class="orders">31 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +7.9%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €3,800 (28 orders) | This Year: €4,100 (31 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 78%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 85%"></div>
+                                </div>
+                            </td>
+                            <td class="divider-cell"></td>
+                            <td class="school-cell" title="📍 Valley View School&#10;Location: Colorado&#10;Segment: Suburban">Valley View School</td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€2,800</div>
+                                    <div class="orders">18 orders</div>
+                                </div>
+                            </td>
+                            <td class="year-cell">
+                                <div class="year-data">
+                                    <div class="revenue">€2,850</div>
+                                    <div class="orders">19 orders</div>
+                                </div>
+                            </td>
+                            <td class="growth-cell positive">🔼 +1.8%</td>
+                            <td class="trend-cell">
+                                <div class="sparkline-bars" title="Last Year: €2,800 (18 orders) | This Year: €2,850 (19 orders)">
+                                    <div class="sparkline-bar last-year" style="height: 70%"></div>
+                                    <div class="sparkline-bar this-year" style="height: 72%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Season Charts Section -->
+        <div class="charts-section">
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Season Performance Overview</h3>
+                        <div class="product-filter">
+                            <select id="productFilter" class="filter-select">
+                                <option value="all-products">All Products</option>
+                                <option value="pack-s">Pack S</option>
+                                <option value="pack-m">Pack M</option>
+                                <option value="pack-l">Pack L</option>
+                                <option value="pack-xl">Pack XL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-value">€0</div>
+                    <div class="chart-wrapper">
+                        <canvas id="seasonPerformanceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">Seasonal Product Breakdown</h3>
+                    <div class="products-breakdown">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <div class="product-name">Pack S</div>
+                                <div class="product-sales">€12,500</div>
+                            </div>
+                            <div class="product-percentage">35.2% of season revenue</div>
+                            <div class="product-bar">
+                                <div class="bar-fill" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-info">
+                                <div class="product-name">Pack M</div>
+                                <div class="product-sales">€9,800</div>
+                            </div>
+                            <div class="product-percentage">27.6% of season revenue</div>
+                            <div class="product-bar">
+                                <div class="bar-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-info">
+                                <div class="product-name">Pack L</div>
+                                <div class="product-sales">€7,200</div>
+                            </div>
+                            <div class="product-percentage">20.3% of season revenue</div>
+                            <div class="product-bar">
+                                <div class="bar-fill" style="width: 58%"></div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-info">
+                                <div class="product-name">Pack XL</div>
+                                <div class="product-sales">€4,500</div>
+                            </div>
+                            <div class="product-percentage">12.7% of season revenue</div>
+                            <div class="product-bar">
+                                <div class="bar-fill" style="width: 36%"></div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-info">
+                                <div class="product-name">Pack XXL</div>
+                                <div class="product-sales">€1,500</div>
+                            </div>
+                            <div class="product-percentage">4.2% of season revenue</div>
+                            <div class="product-bar">
+                                <div class="bar-fill" style="width: 12%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">Season Growth Metrics</h3>
+                    <div class="breakdown-table" id="seasonGrowthTable">
+                        <div class="breakdown-row">
+                            <span>Season Start Date</span>
+                            <span>June 1, 2025</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Season End Date</span>
+                            <span>August 31, 2025</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Total Season Revenue</span>
+                            <span>€35,500</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Previous Season Revenue</span>
+                            <span>€28,200</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Growth Rate</span>
+                            <span>+25.9%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Average Daily Revenue</span>
+                            <span>€1,183</span>
+                        </div>
+                        <div class="breakdown-row total">
+                            <span>Season Performance</span>
+                            <span>Excellent</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">Seasonal Trends</h3>
+                    <div class="chart-value" id="seasonTrendValue">€0</div>
+                    <div class="chart-wrapper">
+                        <canvas id="seasonTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Additional season-specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load season data when page loads
+            loadSeasonData();
+            setupSidebarNavigation();
+            initializeInteractiveFeatures();
+        });
+
+        // Initialize interactive features
+        function initializeInteractiveFeatures() {
+            // Add click animations to metric cards
+            const metricCards = document.querySelectorAll('.dashboard-metric-card, .metric-card');
+            metricCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Add ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = '50%';
+                    ripple.style.top = '50%';
+                    ripple.style.width = '20px';
+                    ripple.style.height = '20px';
+                    ripple.style.marginLeft = '-10px';
+                    ripple.style.marginTop = '-10px';
+                    ripple.style.pointerEvents = 'none';
+                    
+                    this.style.position = 'relative';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                    
+                    // Show metric details (you can add a modal or tooltip here)
+                    showMetricDetails(this);
+                });
+            });
+
+            // Add hover effects to table rows
+            const tableRows = document.querySelectorAll('.table-row');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.01)';
+                    this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Add number counting animation
+            animateNumbers();
+        }
+
+        // Show metric details
+        function showMetricDetails(card) {
+            const metricName = card.querySelector('.metric-label').textContent.trim();
+            const metricValue = card.querySelector('.metric-number').textContent;
+            const metricGrowth = card.querySelector('.metric-growth')?.textContent || '';
+            
+            // Create a simple tooltip
+            const tooltip = document.createElement('div');
+            tooltip.style.position = 'fixed';
+            tooltip.style.top = '50%';
+            tooltip.style.left = '50%';
+            tooltip.style.transform = 'translate(-50%, -50%)';
+            tooltip.style.background = '#1e293b';
+            tooltip.style.color = 'white';
+            tooltip.style.padding = '16px';
+            tooltip.style.borderRadius = '8px';
+            tooltip.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            tooltip.style.zIndex = '10000';
+            tooltip.style.fontSize = '14px';
+            tooltip.style.maxWidth = '300px';
+            tooltip.style.textAlign = 'center';
+            tooltip.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 8px;">${metricName}</div>
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">${metricValue}</div>
+                <div style="font-size: 12px; opacity: 0.8;">${metricGrowth}</div>
+                <div style="margin-top: 12px; font-size: 12px; opacity: 0.7;">Click anywhere to close</div>
+            `;
+            
+            document.body.appendChild(tooltip);
+            
+            // Close tooltip on click
+            const closeTooltip = () => {
+                tooltip.remove();
+                document.removeEventListener('click', closeTooltip);
+            };
+            
+            setTimeout(() => {
+                document.addEventListener('click', closeTooltip);
+            }, 100);
+        }
+
+        // Animate numbers on page load
+        function animateNumbers() {
+            const numberElements = document.querySelectorAll('.metric-number');
+            
+            numberElements.forEach(element => {
+                const finalValue = element.textContent;
+                const isCurrency = finalValue.includes('€');
+                const isPercentage = finalValue.includes('%');
+                
+                if (isCurrency) {
+                    const numericValue = parseFloat(finalValue.replace(/[€,]/g, ''));
+                    animateNumber(element, 0, numericValue, finalValue, true);
+                } else if (isPercentage) {
+                    const numericValue = parseFloat(finalValue.replace('%', ''));
+                    animateNumber(element, 0, numericValue, finalValue, false, true);
+                } else {
+                    const numericValue = parseFloat(finalValue.replace(/,/g, ''));
+                    if (!isNaN(numericValue)) {
+                        animateNumber(element, 0, numericValue, finalValue, false, false);
+                    }
+                }
+            });
+        }
+
+        // Animate number counting
+        function animateNumber(element, start, end, originalText, isCurrency = false, isPercentage = false) {
+            const duration = 1500;
+            const startTime = performance.now();
+            
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = start + (end - start) * easeOutQuart;
+                
+                let displayValue;
+                if (isCurrency) {
+                    displayValue = '€' + Math.round(currentValue).toLocaleString();
+                } else if (isPercentage) {
+                    displayValue = Math.round(currentValue) + '%';
+                } else {
+                    displayValue = Math.round(currentValue).toLocaleString();
+                }
+                
+                element.textContent = displayValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = originalText;
+                }
+            }
+            
+            requestAnimationFrame(updateNumber);
+        }
+
+        // Load season data
+        function loadSeasonData() {
+            try {
+                const seasonData = {
+                    "seasonRevenue": 35500,
+                    "seasonStartDate": "June 1, 2025",
+                    "seasonEndDate": "August 31, 2025",
+                    "previousSeasonRevenue": 28200,
+                    "averageDailyRevenue": 1183,
+                    "topPerformingProduct": "Pack S",
+                    "seasonPerformance": "Excellent",
+                    "totalSchoolsOnboarded": 45,
+                    "schoolsWithSales": 38,
+                    "numberOfKids": 1250,
+                    "numberOfUniqueKids": 980,
+                    "salesPerKid": 36.2,
+                    "abKidsWhoOrdered": 420,
+                    "abByOrder": 65.5,
+                    "conversionRate": 34.2,
+                    "growthPercent": {
+                        "seasonRevenue": 25.9,
+                        "totalSchoolsOnboarded": 12.5,
+                        "schoolsWithSales": 8.7,
+                        "numberOfKids": 18.3,
+                        "numberOfUniqueKids": 15.7,
+                        "salesPerKid": 12.8,
+                        "abKidsWhoOrdered": 22.1,
+                        "abByOrder": 8.9,
+                        "conversionRate": 16.4
+                    }
+                };
+                
+                // Render season charts
+                renderSeasonCharts();
+                
+            } catch (error) {
+                console.error('Error loading season data:', error);
+            }
+        }
+
+        // Render season charts
+        function renderSeasonCharts() {
+            renderSeasonPerformanceChart();
+            renderSeasonTrendChart();
+        }
+
+        // Render season performance chart
+        function renderSeasonPerformanceChart() {
+            const ctx = document.getElementById('seasonPerformanceChart');
+            if (!ctx) return;
+            
+            const ctx2d = ctx.getContext('2d');
+            
+            const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'];
+            const currentSeasonData = [8500, 9200, 7800, 8900, 9500, 8200, 8800, 9100, 8600, 9300, 8700, 8900];
+            const previousSeasonData = [6800, 7200, 6500, 7100, 7800, 6900, 7300, 7600, 7100, 7800, 7200, 7400];
+
+            new Chart(ctx2d, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Current Season',
+                            data: currentSeasonData,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        },
+                        {
+                            label: 'Previous Season',
+                            data: previousSeasonData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { size: 12 }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#e2e8f0' },
+                            ticks: {
+                                callback: function(value) {
+                                    return '€' + (value / 1000) + 'K';
+                                }
+                            }
+                        },
+                        x: { grid: { display: false } }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        }
+
+        // Render season trend chart
+        function renderSeasonTrendChart() {
+            const ctx = document.getElementById('seasonTrendChart');
+            if (!ctx) return;
+            
+            const ctx2d = ctx.getContext('2d');
+            
+            const labels = ['June', 'July', 'August'];
+            const revenueData = [11500, 12800, 11200];
+            const ordersData = [85, 92, 68];
+
+            new Chart(ctx2d, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: revenueData,
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Orders',
+                            data: ordersData,
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                            borderColor: '#10b981',
+                            borderWidth: 1,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { size: 12 }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            grid: { color: '#e2e8f0' },
+                            ticks: {
+                                callback: function(value) {
+                                    return '€' + (value / 1000) + 'K';
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: {
+                                callback: function(value) {
+                                    return value;
+                                }
+                            }
+                        },
+                        x: { grid: { display: false } }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        }
+
+        // Toggle funnel metrics function
+        function toggleFunnelMetrics() {
+            const content = document.getElementById('funnelMetricsContent');
+            const btn = document.querySelector('.collapse-btn');
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                btn.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                btn.classList.add('collapsed');
+            }
+        }
+
+        // Download CSV function
+        function downloadCSV() {
+            const tableData = [
+                {
+                    school: 'Bright Future Elementary',
+                    lastYearRevenue: '€4,200',
+                    lastYearOrders: '35',
+                    thisYearRevenue: '€4,850',
+                    thisYearOrders: '38',
+                    growth: '+15.5%'
+                },
+                {
+                    school: 'St. Mary\'s Academy',
+                    lastYearRevenue: '€4,800',
+                    lastYearOrders: '40',
+                    thisYearRevenue: '€5,400',
+                    thisYearOrders: '45',
+                    growth: '+12.5%'
+                },
+                {
+                    school: 'Innovation Academy',
+                    lastYearRevenue: '€3,200',
+                    lastYearOrders: '22',
+                    thisYearRevenue: '€3,600',
+                    thisYearOrders: '26',
+                    growth: '+12.5%'
+                },
+                {
+                    school: 'Sunshine Primary',
+                    lastYearRevenue: '€3,600',
+                    lastYearOrders: '25',
+                    thisYearRevenue: '€3,950',
+                    thisYearOrders: '29',
+                    growth: '+9.7%'
+                },
+                {
+                    school: 'Excellence Prep School',
+                    lastYearRevenue: '€3,800',
+                    lastYearOrders: '28',
+                    thisYearRevenue: '€4,100',
+                    thisYearOrders: '31',
+                    growth: '+7.9%'
+                },
+                {
+                    school: 'Central High School',
+                    lastYearRevenue: '€4,500',
+                    lastYearOrders: '36',
+                    thisYearRevenue: '€4,200',
+                    thisYearOrders: '32',
+                    growth: '-6.7%'
+                },
+                {
+                    school: 'Riverside Elementary',
+                    lastYearRevenue: '€3,900',
+                    lastYearOrders: '30',
+                    thisYearRevenue: '€3,700',
+                    thisYearOrders: '28',
+                    growth: '-5.1%'
+                },
+                {
+                    school: 'Oakwood Middle School',
+                    lastYearRevenue: '€3,400',
+                    lastYearOrders: '24',
+                    thisYearRevenue: '€3,300',
+                    thisYearOrders: '23',
+                    growth: '-2.9%'
+                },
+                {
+                    school: 'Maple Street Academy',
+                    lastYearRevenue: '€3,100',
+                    lastYearOrders: '20',
+                    thisYearRevenue: '€3,050',
+                    thisYearOrders: '19',
+                    growth: '-1.6%'
+                },
+                {
+                    school: 'Valley View School',
+                    lastYearRevenue: '€2,800',
+                    lastYearOrders: '18',
+                    thisYearRevenue: '€2,850',
+                    thisYearOrders: '19',
+                    growth: '+1.8%'
+                }
+            ];
+
+            // Create CSV content
+            const headers = ['School', 'Last Year Revenue', 'Last Year Orders', 'This Year Revenue', 'This Year Orders', 'Growth %'];
+            const csvContent = [
+                headers.join(','),
+                ...tableData.map(row => [
+                    row.school,
+                    row.lastYearRevenue,
+                    row.lastYearOrders,
+                    row.thisYearRevenue,
+                    row.thisYearOrders,
+                    row.growth
+                ].join(','))
+            ].join('\n');
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'schools_performance_comparison.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
